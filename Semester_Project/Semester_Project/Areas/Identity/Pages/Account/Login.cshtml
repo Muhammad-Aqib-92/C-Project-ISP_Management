@@ -1,0 +1,135 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    ViewData["HideNavBar"] = true;  // This hides navbar in the shared layout
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url('/images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', sans-serif;
+        height: 100vh;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .card-glass {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-right: 5%;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+    }
+
+    h2 {
+        color: #fff;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+    }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            box-shadow: none;
+        }
+
+    label {
+        color: #fff;
+    }
+
+    .btn-group-custom {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-primary, .btn-secondary {
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 10px;
+        transition: 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #2196f3;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #1769aa;
+        }
+
+    .btn-secondary {
+        background-color: #eeeeee;
+        color: #000;
+    }
+
+        .btn-secondary:hover {
+            background-color: #d6d6d6;
+        }
+
+    .text-danger {
+        color: #ffb3b3 !important;
+    }
+</style>
+
+<div class="card-glass">
+    <form id="account" method="post">
+        <h2>Login</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+            <label asp-for="Input.Email">Email</label>
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Password" />
+            <label asp-for="Input.Password">Password</label>
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" asp-for="Input.RememberMe" />
+            <label class="form-check-label" asp-for="Input.RememberMe">
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
+        </div>
+
+        <div class="btn-group-custom mb-3">
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary w-100 text-center">Register</a>
+        </div>
+
+        <div class="text-center">
+            <a id="forgot-password" asp-page="./ForgotPassword" class="text-white">Forgot your password?</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

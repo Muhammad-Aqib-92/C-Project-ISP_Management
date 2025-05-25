@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    /* Full page background */
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: url('/images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #f0f0f0;
+    }
+
+    /* Center content container */
+    .welcome-container {
+        height: 100vh; /* full viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: brightness(0.6);
+        text-align: center;
+        padding: 20px;
+    }
+
+        .welcome-container h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px;
+        }
+
+        /* Optional: add a subtitle or tagline */
+        .welcome-container p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+            margin: 0 auto;
+        }
+</style>
+
+<div class="welcome-container">
+    <h1>Welcome to Our Internet Service</h1>
+    <p>Reliable, fast, and affordable internet solutions tailored for you.</p>
+</div>

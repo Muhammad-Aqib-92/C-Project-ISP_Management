@@ -1,0 +1,38 @@
+﻿@model List<Semester_Project.Models.InternetPackage>
+@{
+    ViewData["Title"] = "Package Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Package Management</h2>
+
+<a href="/InternetPackage/Create" class="btn btn-primary mb-3">➕ Add Package</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Speed</th>
+            <th>Cost</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pkg in Model)
+        {
+            <tr>
+                <td>@pkg.Id</td>
+                <td>@pkg.PackageName</td>
+                <td>@pkg.Speed Mbps</td>
+                <td>@pkg.Cost.ToString("C")</td>
+                <td>@pkg.Price.ToString("C")</td>
+                <td>
+                    <a href="/InternetPackage/Edit/@pkg.Id" class="btn btn-warning">✏️ Edit</a>
+                    <a href="/InternetPackage/Delete/@pkg.Id" class="btn btn-danger">🗑️ Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

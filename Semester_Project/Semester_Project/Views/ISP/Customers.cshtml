@@ -1,0 +1,72 @@
+﻿@model List<ISP_user>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers</title>
+    <link rel="stylesheet" href="~/styles.css" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="@Url.Action("AddUser", "ISP")" class="btn btn-primary">➕ Add Customer</a>
+            <a asp-controller="InternetPackage" asp-action="Index" class="btn btn-primary">Package Management</a>
+        </div>
+        <hr />
+    </div>
+
+    <div class="content">
+        <h2>Customer Management</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Package (Mbps)</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Email</td>
+                        <td>@customer.Phone</td>
+                        <td>@customer.Address</td>
+                        <td class="text-center">
+                            @(customer.InternetPackage != null ? customer.InternetPackage.Speed.ToString() : "No Package")
+                        </td>
+                        <td>
+                            @(customer.InternetPackage != null ? customer.Price.ToString("C") : "-")
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditCustomer", "ISP", new { id = customer.Id })" class="btn btn-warning">✏️ Edit</a>
+                            <a href="@Url.Action("Delete", "ISP", new { id = customer.Id })" class="btn btn-danger">🗑️ Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

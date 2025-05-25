@@ -1,0 +1,79 @@
+﻿@model List<Semester_Project.Models.ISP_user>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Billing & Payments</h2>
+
+<nav>
+    <ul>
+        <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+        <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+        <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+        <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+    </ul>
+</nav>
+
+<table>
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Package (Mbps)</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+            <th>Active Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Name</td>
+                <td>
+                    @(customer.InternetPackage != null ? customer.InternetPackage.Speed.ToString() : "No Package")
+                </td>
+                <td>
+                    @(customer.InternetPackage != null ? customer.Price.ToString("C") : "-")
+                </td>
+                <td>
+                    @if (customer.IsPaid == true)
+                    {
+                        <span style="color: white; background-color: green; padding: 4px 10px; border-radius: 5px;">Paid</span>
+                    }
+                    else
+                    {
+                        <span style="color: white; background-color: red; padding: 4px 10px; border-radius: 5px;">Unpaid</span>
+                    }
+                </td>
+                <td>
+                    @if (customer.IsActive == true)
+                    {
+                        <span style="color: white; background-color: blue; padding: 4px 10px; border-radius: 5px;">Active</span>
+                    }
+                    else
+                    {
+                        <span style="color: white; background-color: gray; padding: 4px 10px; border-radius: 5px;">Inactive</span>
+                    }
+                </td>
+                <td>
+                    @if (customer.IsPaid == true)
+                    {
+                        <form asp-action="MarkAsUnpaid" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@customer.Id" />
+                            <button type="submit" style="background-color: red; color: white; padding: 5px 10px; border: none; border-radius: 4px;">Mark as Unpaid</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="MarkAsPaid" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@customer.Id" />
+                            <button type="submit" style="background-color: green; color: white; padding: 5px 10px; border: none; border-radius: 4px;">Mark as Paid</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

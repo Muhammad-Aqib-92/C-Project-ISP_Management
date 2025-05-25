@@ -1,0 +1,68 @@
+﻿@model Semester_Project.Models.DashboardViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ISP System</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <h2>ISP System</h2>
+        <ul>
+            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard">
+        <h2>Dashboard Overview</h2>
+        <div class="stats">
+            <div class="card">Total Customers: @Model.TotalCustomers</div>
+            <div class="card">Total Revenue: @Model.TotalRevenue</div>
+            <div class="card">Unpaid Customers: @Model.UnpaidCustomers</div>
+            <div class="card">Profit: @Model.Profit</div>
+        </div>
+
+        <!-- ✅ Chat Room Section -->
+        <div class="chat-room">
+            <h2>Chat Room</h2>
+            <input id="userInput" type="text" placeholder="Your name" />
+            <input id="messageInput" type="text" placeholder="Message" />
+            <button onclick="sendMessage()">Send</button>
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+        <script>
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/NOCHAT")
+                .build();
+
+            connection.on("ReceiveMessage", (user, message) => {
+                const li = document.createElement("li");
+                li.textContent = `${user}: ${message}`;
+                document.getElementById("messagesList").appendChild(li);
+            });
+
+            connection.start().catch(err => console.error(err.toString()));
+
+            function sendMessage() {
+                const user = document.getElementById("userInput").value;
+                const message = document.getElementById("messageInput").value;
+                connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+                document.getElementById("messageInput").value = "";
+            }
+        </script>
+    }
+</body>
+</html>

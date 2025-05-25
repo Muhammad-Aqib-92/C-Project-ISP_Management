@@ -1,0 +1,72 @@
+﻿@model Semester_Project.Models.ISP_user
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Customer</title>
+    <link rel="stylesheet" href="~/styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-header">
+        <h2>Add New Customer</h2>
+    </div>
+
+    <div class="form-container">
+        <form method="post" asp-controller="ISP" asp-action="AddUser">
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" id="Name" name="Name" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="Phone">Phone:</label>
+                <input type="text" id="Phone" name="Phone" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="Address">Address:</label>
+                <input type="text" id="Address" name="Address" required class="form-input" />
+            </div>
+            <div class="form-group">
+                <label for="InternetPackageId">Internet Package:</label>
+                <select id="InternetPackageId" name="InternetPackageId" class="form-input" required>
+                    <option value="">-- Select Package --</option>
+                    @foreach (var pkg in ViewBag.Packages as List<Semester_Project.Models.InternetPackage>)
+                    {
+                        <option value="@pkg.Id">@pkg.PackageName (@pkg.Speed Mbps) - Rs. @pkg.Price</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Customer</button>
+        </form>
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="message">
+            @ViewBag.Message
+        </div>
+    }
+
+    <div class="back-button">
+        <a href="@Url.Action("Customers", "ISP")" class="btn btn-secondary">Back to Customers</a>
+    </div>
+
+</body>
+</html>

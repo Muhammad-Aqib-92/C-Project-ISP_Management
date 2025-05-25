@@ -1,0 +1,44 @@
+﻿@model ISP_user
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delete Customer</title>
+    <link rel="stylesheet" href="~/styles.css" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="mb-4 text-danger">Are you sure you want to delete this customer?</h2>
+
+        <div class="border rounded p-4 mb-4 bg-light shadow-sm">
+            <p><strong>Name:</strong> @Model.Name</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Phone:</strong> @Model.Phone</p>
+            <p><strong>Address:</strong> @Model.Address</p>
+        </div>
+
+        <form asp-action="Delete" method="post" class="d-flex justify-content-between">
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                <a href="@Url.Action("Customers", "ISP")" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+            <a href="@Url.Action("Customers", "ISP")" class="btn btn-secondary">← Go Back</a>
+        </form>
+    </div>
+
+</body>
+</html>

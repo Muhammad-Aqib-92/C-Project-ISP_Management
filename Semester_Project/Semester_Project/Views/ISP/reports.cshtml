@@ -1,0 +1,38 @@
+﻿<nav>
+    <h2>ISP System</h2>
+    <ul>
+        <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
+        <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
+        <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
+        <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
+    </ul>
+</nav>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Package</th>
+            <th>Speed</th>
+            <th>Price</th>
+            <th>Cost</th> <!-- NEW COLUMN -->
+            <th>Payment Status</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@(user.InternetPackage?.PackageName ?? "N/A")</td>
+                <td>@(user.InternetPackage?.Speed ?? 0) Mbps</td>
+                <td>@(user.Price?.ToString("C") ?? "-")</td>
+                <td>@(user.InternetPackage?.Cost.ToString("C") ?? "-")</td> <!-- NEW FIELD -->
+                <td>@(user.IsPaid == true ? "Paid" : "Unpaid")</td>
+                <td>@(user.IsActive == true ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>

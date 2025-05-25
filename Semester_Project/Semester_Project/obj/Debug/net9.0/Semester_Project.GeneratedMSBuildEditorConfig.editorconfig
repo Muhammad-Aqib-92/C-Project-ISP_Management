@@ -1,0 +1,149 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Semester_Project
+build_property.RootNamespace = Semester_Project
+build_property.ProjectDir = C:\Users\Muhammad Aqib\Desktop\Semester_Project\Semester_Project\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Muhammad Aqib\Desktop\Semester_Project\Semester_Project
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/Account/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/InternetPackage/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/InternetPackage/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/InternetPackage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/AddInternet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEFkZEludGVybmV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/AddUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEFkZFVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/billing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXGJpbGxpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Chat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXENoYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Customers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEN1c3RvbWVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Deletecshtml.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXERlbGV0ZWNzaHRtbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/EditCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEVkaXRDdXN0b21lci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/EditCustomer.cshtml.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEVkaXRDdXN0b21lci5jc2h0bWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/ISP/reports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXHJlcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/Semester_Project/Semester_Project/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-vvawzfkwmd

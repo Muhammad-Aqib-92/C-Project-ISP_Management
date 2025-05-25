@@ -1,0 +1,365 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\isp\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\isp\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\isp\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\isp\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\areas\\identity\\pages\\account\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\areas\\identity\\pages\\account\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\areas\\identity\\pages\\account\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\areas\\identity\\pages\\account\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\controllers\\ispcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\controllers\\ispcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\wwwroot\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\wwwroot\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\models\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\models\\repository\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\models\\internetpackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\models\\internetpackage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|c:\\users\\muhammad aqib\\desktop\\semester_project\\semester_project\\views\\isp\\billing.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6766FC27-7C44-418A-8D35-A3CED996E29C}|Semester_Project\\Semester_Project.csproj|solutionrelative:semester_project\\views\\isp\\billing.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 104,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Semester_Project\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Semester_Project\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T04:00:27.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\ISP\\Dashboard.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\Dashboard.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\ISP\\Dashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T03:53:20.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "Semester_Project\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "Semester_Project\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-25T03:46:02.146Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAxwGoAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T03:23:30.311Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T03:22:39.309Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_ViewImports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+              "RelativeToolTip": "Semester_Project\\Areas\\Identity\\Pages\\Account\\_ViewImports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T03:22:30.237Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "login.css",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\login.css",
+              "RelativeDocumentMoniker": "Semester_Project\\wwwroot\\css\\login.css",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\login.css",
+              "RelativeToolTip": "Semester_Project\\wwwroot\\css\\login.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-25T02:34:51.906Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAwIcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:31:27.5Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Logout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
+              "RelativeToolTip": "Semester_Project\\Areas\\Identity\\Pages\\Account\\Logout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:31:26.489Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:30:17.401Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "_LoginPartial.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\Shared\\_LoginPartial.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Shared\\_LoginPartial.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\Shared\\_LoginPartial.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:29:12.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "style.css",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\style.css",
+              "RelativeDocumentMoniker": "Semester_Project\\wwwroot\\css\\style.css",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\wwwroot\\css\\style.css",
+              "RelativeToolTip": "Semester_Project\\wwwroot\\css\\style.css",
+              "ViewState": "AgIAACUAAAAAAAAAAAAowBQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-25T02:24:44.714Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:18:08.43Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAwDUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:14:23.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "InternetPackage.cs",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Models\\InternetPackage.cs",
+              "RelativeDocumentMoniker": "Semester_Project\\Models\\InternetPackage.cs",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Models\\InternetPackage.cs",
+              "RelativeToolTip": "Semester_Project\\Models\\InternetPackage.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T02:10:21.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "reports.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\reports.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\ISP\\reports.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\reports.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\ISP\\reports.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T02:06:53.685Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "billing.cshtml",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\billing.cshtml",
+              "RelativeDocumentMoniker": "Semester_Project\\Views\\ISP\\billing.cshtml",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Views\\ISP\\billing.cshtml",
+              "RelativeToolTip": "Semester_Project\\Views\\ISP\\billing.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-25T01:55:09.024Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ISPController.cs",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Controllers\\ISPController.cs",
+              "RelativeDocumentMoniker": "Semester_Project\\Controllers\\ISPController.cs",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Controllers\\ISPController.cs",
+              "RelativeToolTip": "Semester_Project\\Controllers\\ISPController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMQAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T01:52:20.271Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Models\\Repository\\Repository.cs",
+              "RelativeDocumentMoniker": "Semester_Project\\Models\\Repository\\Repository.cs",
+              "ToolTip": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Models\\Repository\\Repository.cs",
+              "RelativeToolTip": "Semester_Project\\Models\\Repository\\Repository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAKYAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T00:06:26.823Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 296,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 63,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
