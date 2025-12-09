@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jkvmtJvxn70=",
+  "dgSpecHash": "Lk/EAYNoeXc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Muhammad Aqib\\Desktop\\Semester_Project\\Semester_Project\\Semester_Project.csproj",
+  "projectFilePath": "C:\\Users\\Muhammad Aqib\\Desktop\\ISP\\C-Project-ISP_Management\\Semester_Project\\Semester_Project\\Semester_Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Muhammad Aqib\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Muhammad Aqib\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

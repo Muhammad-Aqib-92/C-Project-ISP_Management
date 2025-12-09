@@ -56,6 +56,7 @@ namespace Semester_Project6.Models.Repository
         }
 
         // Dashboard work
+        // Dashboard work
         public DashboardViewModel GetDashboardStats()
         {
             var totalCustomers = dbContext.ISP_Users.Count();
@@ -72,12 +73,28 @@ namespace Semester_Project6.Models.Repository
 
             var profit = totalRevenue - cost;
 
+            // Fetch 5 most recent customers (assuming higher ID = more recent, or we could add CreatedAt)
+            var recentCustomers = dbContext.ISP_Users
+                .Include(u => u.InternetPackage)
+                .OrderByDescending(u => u.Id)
+                .Take(5)
+                .ToList();
+
+            // Calculate package distribution
+            var packageStats = dbContext.ISP_Users
+                .Where(u => u.InternetPackage != null)
+                .GroupBy(u => u.InternetPackage.PackageName)
+                .Select(g => new { Name = g.Key, Count = g.Count() })
+                .ToDictionary(k => k.Name, v => v.Count);
+
             return new DashboardViewModel
             {
                 TotalCustomers = totalCustomers,
                 TotalRevenue = totalRevenue,
                 UnpaidCustomers = unpaidCustomers,
-                Profit = profit
+                Profit = profit,
+                RecentCustomers = recentCustomers,
+                PackageDistribution = packageStats
             };
         }
 
@@ -96,6 +113,20 @@ namespace Semester_Project6.Models.Repository
                     Console.WriteLine("Inner: " + ex.InnerException.Message);
                 throw;
             }
+        }
+
+        public List<ISP_user> Get(string searchString)
+        {
+             var query = dbContext.ISP_Users.Include(u => u.InternetPackage).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                query = query.Where(u => u.Name.ToLower().Contains(searchString) || 
+                                         u.Email.ToLower().Contains(searchString));
+            }
+
+            return query.ToList();
         }
 
         public ISP_user? GetUserById(int id)

@@ -1,57 +1,58 @@
 ﻿@model ISP_user
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Customer</title>
-    <link rel="stylesheet" href="~/styles.css" />
-</head>
-<body>
+@{
+    ViewData["Title"] = "Edit Customer";
+}
 
-    <!-- Navbar -->
-    <nav>
-        <ul>
-            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
-            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
-            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
-            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
-        </ul>
-    </nav>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Customers</h1>
+</div>
 
-    <div class="container mt-5">
-        <h2 class="mb-4">Edit Customer</h2>
-
-        <form asp-action="EditCustomer" method="post" class="border p-4 rounded shadow-sm bg-light">
-            <input type="hidden" asp-for="Id" />
-
-            <div class="mb-3">
-                <label asp-for="Name" class="form-label">Name</label>
-                <input asp-for="Name" class="form-control" required />
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Edit Customer Details</h6>
             </div>
+            <div class="card-body">
+                <form asp-action="EditCustomer" method="post">
+                    <input type="hidden" asp-for="Id" />
 
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label">Email</label>
-                <input asp-for="Email" class="form-control" type="email" required />
-            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Name" class="form-label">Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter full name" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" type="email" placeholder="Enter email address" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="Phone" class="form-label">Phone</label>
-                <input asp-for="Phone" class="form-control" required />
-            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Phone" class="form-label">Phone</label>
+                            <input asp-for="Phone" class="form-control" placeholder="Enter phone number" required />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                             <!-- Address often takes full width, keeping here for grid consistnecy or could move to full width below -->
+                             <label asp-for="Address" class="form-label">Address</label>
+                             <input asp-for="Address" class="form-control" placeholder="Enter full address" required />
+                             <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
 
-            <div class="mb-3">
-                <label asp-for="Address" class="form-label">Address</label>
-                <input asp-for="Address" class="form-control" required />
-            </div>
+                    <hr class="my-4" />
 
-            <div class="d-flex justify-content-between">
-                <a href="@Url.Action("Customers", "ISP")" class="btn btn-outline-secondary">Back to Customers</a>
-                <button type="submit" class="btn btn-primary">Update</button>
+                    <div class="d-flex justify-content-end">
+                        <a href="@Url.Action("Customers", "ISP")" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Changes</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
-
-</body>
-</html>
+</div>

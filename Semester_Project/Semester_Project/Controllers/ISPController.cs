@@ -85,11 +85,12 @@ namespace Semester_Project6.Controllers
             return NotFound();
         }
 
-        // Customers list, authorized for "UserOnly" policy
+        // Customers list with Search, authorized for "UserOnly" policy
         [Authorize(Policy = "UserOnly")]
-        public IActionResult Customers()
+        public IActionResult Customers(string searchString)
         {
-            List<ISP_user> Data = repo.Get();
+            ViewData["CurrentFilter"] = searchString;
+            List<ISP_user> Data = repo.Get(searchString);
             return View(Data);
         }
 

@@ -113,6 +113,10 @@ namespace Semester_Project.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                
+                // DEBUG LOGGING
+                Console.WriteLine($"Login Attempt: Email={Input.Email}, Result={result}");
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -129,6 +133,9 @@ namespace Semester_Project.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    Console.WriteLine($"Login Failed: {result}");
+                    if (result.IsNotAllowed) Console.WriteLine("Reason: Not Allowed (Email confirmation?)");
+                    
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

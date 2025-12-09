@@ -1,38 +1,70 @@
-﻿<nav>
-    <h2>ISP System</h2>
-    <ul>
-        <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
-        <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
-        <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
-        <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
-    </ul>
-</nav>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Package</th>
-            <th>Speed</th>
-            <th>Price</th>
-            <th>Cost</th> <!-- NEW COLUMN -->
-            <th>Payment Status</th>
-            <th>Active</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model)
-        {
-            <tr>
-                <td>@user.Name</td>
-                <td>@user.Email</td>
-                <td>@(user.InternetPackage?.PackageName ?? "N/A")</td>
-                <td>@(user.InternetPackage?.Speed ?? 0) Mbps</td>
-                <td>@(user.Price?.ToString("C") ?? "-")</td>
-                <td>@(user.InternetPackage?.Cost.ToString("C") ?? "-")</td> <!-- NEW FIELD -->
-                <td>@(user.IsPaid == true ? "Paid" : "Unpaid")</td>
-                <td>@(user.IsActive == true ? "Yes" : "No")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+﻿@model IEnumerable<Semester_Project.Models.ISP_user>
+
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="h3 mb-4 text-gray-800">Reports</h1>
+
+<div class="card card-custom shadow mb-4">
+    <div class="card-header-custom py-3">
+        <h6 class="m-0 font-weight-bold text-primary">User Reports</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-custom table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Package</th>
+                        <th>Speed</th>
+                        <th>Price</th>
+                        <th>Cost</th>
+                         <th>Profit</th>
+                        <th>Payment Status</th>
+                        <th>Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        var cost = user.InternetPackage?.Cost ?? 0M;
+                        var price = user.Price;
+                        var profit = price - cost;
+                        <tr>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>@(user.InternetPackage?.PackageName ?? "N/A")</td>
+                            <td>@(user.InternetPackage?.Speed ?? 0) Mbps</td>
+                            <td>@(price.ToString("C"))</td>
+                            <td>@(cost.ToString("C"))</td>
+                            <td class="@(profit >= 0 ? "text-success" : "text-danger")">@profit.ToString("C")</td>
+                            <td>
+                                @if (user.IsPaid == true)
+                                {
+                                    <span class="badge bg-success">Paid</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Unpaid</span>
+                                }
+                            </td>
+                            <td>
+                                 @if (user.IsActive == true)
+                                {
+                                    <span class="badge bg-success">Yes</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">No</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

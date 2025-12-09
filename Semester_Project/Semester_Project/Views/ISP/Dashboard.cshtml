@@ -1,68 +1,170 @@
 ﻿@model Semester_Project.Models.DashboardViewModel
 @{
+    ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - ISP System</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <nav>
-        <h2>ISP System</h2>
-        <ul>
-            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
-            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
-            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
-            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
-        </ul>
-    </nav>
+<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
 
-    <div class="dashboard">
-        <h2>Dashboard Overview</h2>
-        <div class="stats">
-            <div class="card">Total Customers: @Model.TotalCustomers</div>
-            <div class="card">Total Revenue: @Model.TotalRevenue</div>
-            <div class="card">Unpaid Customers: @Model.UnpaidCustomers</div>
-            <div class="card">Profit: @Model.Profit</div>
-        </div>
-
-        <!-- ✅ Chat Room Section -->
-        <div class="chat-room">
-            <h2>Chat Room</h2>
-            <input id="userInput" type="text" placeholder="Your name" />
-            <input id="messageInput" type="text" placeholder="Message" />
-            <button onclick="sendMessage()">Send</button>
-            <ul id="messagesList"></ul>
+<div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-custom border-left-primary h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Customers
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalCustomers</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    @section Scripts {
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-        <script>
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl("/NOCHAT")
-                .build();
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-custom border-left-success h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Total Revenue
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.TotalRevenue</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            connection.on("ReceiveMessage", (user, message) => {
-                const li = document.createElement("li");
-                li.textContent = `${user}: ${message}`;
-                document.getElementById("messagesList").appendChild(li);
-            });
+    <!-- Warnings Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-custom border-left-warning h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Unpaid Customers
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.UnpaidCustomers</div>
+                    </div>
+                     <div class="col-auto">
+                        <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            connection.start().catch(err => console.error(err.toString()));
+     <!-- Profit Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-custom border-left-info h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Net Profit
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.Profit</div>
+                    </div>
+                     <div class="col-auto">
+                        <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            function sendMessage() {
-                const user = document.getElementById("userInput").value;
-                const message = document.getElementById("messageInput").value;
-                connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
-                document.getElementById("messageInput").value = "";
-            }
-        </script>
-    }
-</body>
-</html>
+<div class="row">
+
+    <!-- Recent Customers -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Customers</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Package</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customer in Model.RecentCustomers)
+                            {
+                                <tr>
+                                    <td>@customer.Name</td>
+                                    <td>@(customer.InternetPackage?.PackageName ?? "N/A")</td>
+                                    <td>
+                                        @if (customer.IsPaid == true)
+                                        {
+                                            <span class="badge bg-success">Paid</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Unpaid</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            @if (!Model.RecentCustomers.Any())
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">No recent customers found.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a asp-controller="ISP" asp-action="Customers" class="btn btn-sm btn-primary">View All Customers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Package Popularity -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Package Popularity</h6>
+            </div>
+            <div class="card-body">
+                @foreach (var pkg in Model.PackageDistribution)
+                {
+                    // Calculate percentage for progress bar (simple estimation based on total count)
+                    var total = Model.TotalCustomers > 0 ? Model.TotalCustomers : 1;
+                    var percentage = (int)((double)pkg.Value / total * 100);
+                    var colorClass = percentage > 50 ? "bg-success" : (percentage > 20 ? "bg-info" : "bg-warning");
+
+                    <h4 class="small font-weight-bold">@pkg.Key <span class="float-right text-muted small">(@pkg.Value users)</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar @colorClass" role="progressbar" style="width: @percentage%"
+                             aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                }
+                @if (!Model.PackageDistribution.Any())
+                {
+                    <p class="text-center text-muted">No package data available.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Chat scripts removed *@
+}

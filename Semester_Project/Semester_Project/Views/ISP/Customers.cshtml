@@ -1,72 +1,78 @@
 ﻿@model List<ISP_user>
+@{
+    ViewData["Title"] = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customers</title>
-    <link rel="stylesheet" href="~/styles.css" />
-</head>
-<body>
+<h1 class="h3 mb-4 text-gray-800">Customer Management</h1>
 
-    <!-- Navbar -->
-    <nav>
-        <ul>
-            <li><a asp-controller="ISP" asp-action="Dashboard">Dashboard</a></li>
-            <li><a asp-controller="ISP" asp-action="Customers">Customers</a></li>
-            <li><a asp-controller="ISP" asp-action="Billing">Billing</a></li>
-            <li><a asp-controller="ISP" asp-action="Reports">Reports</a></li>
-        </ul>
-    </nav>
-
-    <div class="container mt-4">
-        <div class="d-flex gap-3 flex-wrap">
-            <a href="@Url.Action("AddUser", "ISP")" class="btn btn-primary">➕ Add Customer</a>
-            <a asp-controller="InternetPackage" asp-action="Index" class="btn btn-primary">Package Management</a>
+<div class="card card-custom shadow mb-4">
+    <div class="card-header-custom py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Customers List</h6>
+        <div class="dropdown no-arrow">
+            <a href="@Url.Action("AddUser", "ISP")" class="btn btn-sm btn-primary-custom shadow-sm">
+                <i class="fas fa-plus fa-sm text-white-50"></i> Add Customer
+            </a>
+            <a asp-controller="InternetPackage" asp-action="Index" class="btn btn-sm btn-info shadow-sm ml-2">
+                <i class="fas fa-box fa-sm text-white-50"></i> Manage Packages
+            </a>
         </div>
-        <hr />
     </div>
+    <div class="card-body">
+        
+        <!-- Search Form -->
+        <form method="get" asp-action="Customers" class="form-inline mb-4">
+            <div class="input-group w-100">
+                <input type="text" name="searchString" class="form-control form-control-custom bg-light border-0 small" placeholder="Search for customers..." aria-label="Search" aria-describedby="basic-addon2" value="@ViewData["CurrentFilter"]">
+                <div class="input-group-append">
+                    <button class="btn btn-primary-custom" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
 
-    <div class="content">
-        <h2>Customer Management</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Package (Mbps)</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var customer in Model)
-                {
+        <div class="table-responsive">
+            <table class="table table-custom table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                     <tr>
-                        <td>@customer.Id</td>
-                        <td>@customer.Name</td>
-                        <td>@customer.Email</td>
-                        <td>@customer.Phone</td>
-                        <td>@customer.Address</td>
-                        <td class="text-center">
-                            @(customer.InternetPackage != null ? customer.InternetPackage.Speed.ToString() : "No Package")
-                        </td>
-                        <td>
-                            @(customer.InternetPackage != null ? customer.Price.ToString("C") : "-")
-                        </td>
-                        <td>
-                            <a href="@Url.Action("EditCustomer", "ISP", new { id = customer.Id })" class="btn btn-warning">✏️ Edit</a>
-                            <a href="@Url.Action("Delete", "ISP", new { id = customer.Id })" class="btn btn-danger">🗑️ Delete</a>
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Package</th>
+                        <th>Price</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td>@customer.Id</td>
+                            <td>@customer.Name</td>
+                            <td>@customer.Email</td>
+                            <td>@customer.Phone</td>
+                            <td>@customer.Address</td>
+                            <td class="text-center">
+                                @(customer.InternetPackage?.Speed.ToString() ?? "0") Mbps
+                            </td>
+                            <td>
+                                @(customer.Price.ToString("C"))
+                            </td>
+                            <td>
+                                <a href="@Url.Action("EditCustomer", "ISP", new { id = customer.Id })" class="btn btn-warning btn-sm btn-circle" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", "ISP", new { id = customer.Id })" class="btn btn-danger btn-sm btn-circle" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-
-</body>
-</html>
+</div>

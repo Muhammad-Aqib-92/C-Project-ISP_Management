@@ -4,35 +4,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Package Management</h2>
+<h1 class="h3 mb-4 text-gray-800">Package Management</h1>
 
-<a href="/InternetPackage/Create" class="btn btn-primary mb-3">➕ Add Package</a>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Speed</th>
-            <th>Cost</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var pkg in Model)
-        {
-            <tr>
-                <td>@pkg.Id</td>
-                <td>@pkg.PackageName</td>
-                <td>@pkg.Speed Mbps</td>
-                <td>@pkg.Cost.ToString("C")</td>
-                <td>@pkg.Price.ToString("C")</td>
-                <td>
-                    <a href="/InternetPackage/Edit/@pkg.Id" class="btn btn-warning">✏️ Edit</a>
-                    <a href="/InternetPackage/Delete/@pkg.Id" class="btn btn-danger">🗑️ Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card card-custom shadow mb-4">
+    <div class="card-header-custom py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">All Packages</h6>
+         <a href="/InternetPackage/Create" class="btn btn-sm btn-primary-custom shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Add Package
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-custom table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Speed</th>
+                        <th>Cost</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pkg in Model)
+                    {
+                        <tr>
+                            <td>@pkg.Id</td>
+                            <td>@pkg.PackageName</td>
+                            <td>@pkg.Speed Mbps</td>
+                            <td>@pkg.Cost.ToString("C")</td>
+                            <td>@pkg.Price.ToString("C")</td>
+                            <td>
+                                <a href="/InternetPackage/Edit/@pkg.Id" class="btn btn-warning btn-sm btn-circle" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="/InternetPackage/Delete/@pkg.Id" class="btn btn-danger btn-sm btn-circle" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

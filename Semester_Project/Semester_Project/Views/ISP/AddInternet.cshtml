@@ -5,30 +5,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mt-4">Add Internet Package</h2>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Internet Packages</h1>
+</div>
 
-<form asp-action="AddInternet" asp-controller="ISP" method="post">
-    <div class="form-group">
-        <label for="PackageName">Package Name</label>
-        <input type="text" class="form-control" id="PackageName" name="PackageName" required />
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Add New Package</h6>
+            </div>
+            <div class="card-body">
+                <form asp-action="AddInternet" asp-controller="ISP" method="post">
+                    <div class="form-group mb-3">
+                        <label for="PackageName" class="form-label">Package Name</label>
+                        <input type="text" class="form-control" id="PackageName" name="PackageName" placeholder="e.g. Gold Plan" required />
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="Speed" class="form-label">Speed (Mbps)</label>
+                            <input type="number" class="form-control" id="Speed" name="Speed" placeholder="e.g. 50" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Price" class="form-label">Price (PKR)</label>
+                             <div class="input-group">
+                                <span class="input-group-text">Rs.</span>
+                                <input type="number" class="form-control" id="Price" name="Price" required />
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Cost" class="form-label">Cost (PKR)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rs.</span>
+                            <input type="number" class="form-control" id="Cost" name="Cost" required />
+                        </div>
+                        <small class="text-muted">Internal cost for the package.</small>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="d-flex justify-content-end">
+                        <a href="@Url.Action("Index", "InternetPackage")" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Internet Package</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="Speed">Speed (Mbps)</label>
-        <input type="number" class="form-control" id="Speed" name="Speed" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Price">Price (PKR)</label>
-        <input type="number" class="form-control" id="Price" name="Price" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Cost">Cost (PKR)</label>
-        <input type="number" class="form-control" id="Cost" name="Cost" required />
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">➕ Add Internet Package</button>
-</form>
+</div>
 
 @* For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860 *@

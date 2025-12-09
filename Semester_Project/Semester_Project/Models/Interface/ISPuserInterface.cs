@@ -7,6 +7,7 @@ namespace Semester_Project6.Models.Interface
     {
         void Add(ISP_user user);              // Add method using ISP_user object
         List<ISP_user> Get();
+        List<ISP_user> Get(string searchString); // NEW SEARCH METHOD
         ISP_user? GetUserById(int id);
         bool UpdateCustomer(ISP_user updatedCustomer);
         bool UpdateUser(ISP_user updatedUser);

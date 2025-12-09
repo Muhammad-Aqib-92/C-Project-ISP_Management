@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["HideNavBar"] = true;
 }
 
 <style>
@@ -44,4 +45,16 @@
 <div class="welcome-container">
     <h1>Welcome to Our Internet Service</h1>
     <p>Reliable, fast, and affordable internet solutions tailored for you.</p>
+
+    <div class="mt-4">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a class="btn btn-primary btn-lg mr-3" asp-area="Identity" asp-page="/Account/Login" style="background-color: #4e73df; border-color: #4e73df; padding: 10px 30px; border-radius: 30px; width: 150px;">Login</a>
+            <a class="btn btn-light btn-lg" asp-area="Identity" asp-page="/Account/Register" style="background-color: white; color: #4e73df; padding: 10px 30px; border-radius: 30px; width: 150px;">Register</a>
+        }
+        else
+        {
+             <a class="btn btn-primary btn-lg" asp-controller="ISP" asp-action="Dashboard" style="background-color: #4e73df; border-color: #4e73df; padding: 10px 30px; border-radius: 30px;">Go to Dashboard</a>
+        }
+    </div>
 </div>
