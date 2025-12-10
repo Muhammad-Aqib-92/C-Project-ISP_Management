@@ -21,18 +21,28 @@
                     <a asp-controller="ISP" asp-action="Dashboard" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
-                    <a asp-controller="ISP" asp-action="Customers" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-users"></i> Customers
-                    </a>
+                    
+                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent") || User.IsInRole("FieldTech"))
+                    {
+                        <a asp-controller="ISP" asp-action="Customers" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-users"></i> Customers
+                        </a>
+                    }
                     <a asp-controller="InternetPackage" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                         <i class="fas fa-box"></i> Packages
                     </a>
-                    <a asp-controller="Billing" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-file-invoice-dollar"></i> Billing
-                    </a>
+                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
+                    {
+                         <a asp-controller="Billing" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-file-invoice-dollar"></i> Billing
+                        </a>
+                    }
+                    @if (User.IsInRole("SuperAdmin"))
+                    {
                         <a asp-controller="Report" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-chart-bar"></i> Reports
-                    </a>
+                            <i class="fas fa-chart-bar"></i> Reports
+                        </a>
+                    }
                     <a asp-controller="Ticket" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                         <i class="fas fa-headset"></i> Support
                     </a>

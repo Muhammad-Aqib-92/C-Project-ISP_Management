@@ -87,15 +87,6 @@ namespace Semester_Project6.Controllers
             return NotFound();
         }
 
-        // Customers list with Search, authorized for "UserOnly" policy
-        [Authorize(Policy = "UserOnly")]
-        public IActionResult Customers(string searchString)
-        {
-            ViewData["CurrentFilter"] = searchString;
-            List<ISP_user> Data = repo.Get(searchString);
-            return View(Data);
-        }
-
         // GET: Add User - show form with packages list
         [HttpGet]
         public IActionResult AddUser()
@@ -138,24 +129,17 @@ namespace Semester_Project6.Controllers
             return View();
         }
 
-        [Authorize(Policy = "AdminOnly")]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult infouser()
         {
             return View();
         }
 
-
-
-        // Dashboard Dynamic
+        // Dashboard
+        [Authorize] // Accessible to all authenticated users, view filters content
         public IActionResult Dashboard()
         {
-            var model = _dashboardService.GetDashboardViewModel();
-            return View(model);
+            var viewModel = _dashboardService.GetDashboardViewModel();
+            return View(viewModel);
         }
 
 

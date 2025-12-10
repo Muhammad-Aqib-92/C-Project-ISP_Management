@@ -39,12 +39,6 @@
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Warnings Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card card-custom border-left-warning h-100 py-2">
@@ -64,24 +58,57 @@
         </div>
     </div>
 
-     <!-- Profit Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-custom border-left-info h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Net Profit
+    @if (User.IsInRole("SuperAdmin"))
+    {
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Revenue (Monthly)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.TotalRevenue</div>
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.Profit</div>
-                    </div>
-                     <div class="col-auto">
-                        <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Profit Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-info h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Net Profit
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.Profit</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-xl-6 col-md-12 mb-4">
+           <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <h4 class="font-weight-bold text-primary">Welcome, @User.Identity?.Name!</h4>
+                    <p>You have access to the ISP Management System. Please select an option from the sidebar to proceed.</p>
+                </div>
+           </div>
+        </div>
+    }
     
     <!-- Open Tickets Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
@@ -104,6 +131,8 @@
 </div>
 
 <div class="row">
+    @if (User.IsInRole("SuperAdmin"))
+    {
     <!-- Revenue Chart -->
     <div class="col-xl-12 col-lg-12">
         <div class="card shadow mb-4">
@@ -117,6 +146,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
 <div class="row">

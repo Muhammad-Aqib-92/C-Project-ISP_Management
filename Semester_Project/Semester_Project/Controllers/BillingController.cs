@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Semester_Project6.Controllers
 {
     [Authorize]
+    [Authorize(Policy = "RequireManagerAccess")]
     public class BillingController : Controller
     {
         private readonly ISPuserinterface repo;

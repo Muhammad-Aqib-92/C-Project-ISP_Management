@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<myappuser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -28,17 +29,39 @@ builder.Services.AddScoped<Semester_Project.Services.DashboardService>();
 builder.Services.AddScoped<Semester_Project.Services.InvoiceService>();
 
 
+
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("UserOnly", policy =>
-        policy.RequireClaim("Role", "user"));
+    options.AddPolicy("RequireFinancialAccess", policy => 
+        policy.RequireRole("SuperAdmin"));
 
-    options.AddPolicy("AdminOnly", policy =>
-        policy.RequireClaim("Role", "Admin"));
+    options.AddPolicy("RequireManagerAccess", policy => 
+        policy.RequireRole("SuperAdmin", "SupportAgent"));
+
+    options.AddPolicy("RequireTechAccess", policy => 
+        policy.RequireRole("SuperAdmin", "SupportAgent", "FieldTech"));
 });
 
 
+
 var app = builder.Build();
+
+// Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<myappuser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await DbInitializer.Initialize(services, userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
