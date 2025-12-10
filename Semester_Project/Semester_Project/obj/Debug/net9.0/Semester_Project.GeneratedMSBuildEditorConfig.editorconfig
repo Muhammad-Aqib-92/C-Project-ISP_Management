@@ -56,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Billing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,10 +86,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/ISP/AddUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEFkZFVzZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/ISP/billing.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXGJpbGxpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/ISP/Chat.cshtml]
@@ -120,8 +120,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/ISP/reports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXHJlcG9ydHMuY3NodG1s
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Report/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Shared/Error.cshtml]
@@ -134,6 +134,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Ticket/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Ticket/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/_ViewImports.cshtml]

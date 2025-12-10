@@ -64,6 +64,9 @@
                                             <i class="fas fa-times-circle"></i> Mark Unpaid
                                         </button>
                                     </form>
+                                    <a asp-action="DownloadInvoice" asp-route-id="@customer.Id" class="btn btn-info btn-sm shadow-sm" target="_blank">
+                                        <i class="fas fa-file-pdf"></i> Invoice
+                                    </a>
                                 }
                                 else
                                 {
@@ -73,6 +76,9 @@
                                             <i class="fas fa-check-circle"></i> Mark Paid
                                         </button>
                                     </form>
+                                     <a asp-action="DownloadInvoice" asp-route-id="@customer.Id" class="btn btn-secondary btn-sm shadow-sm disabled">
+                                        <i class="fas fa-file-pdf"></i> Invoice
+                                    </a>
                                 }
                             </td>
                         </tr>

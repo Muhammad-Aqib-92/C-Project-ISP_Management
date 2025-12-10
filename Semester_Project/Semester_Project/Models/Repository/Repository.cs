@@ -56,47 +56,7 @@ namespace Semester_Project6.Models.Repository
         }
 
         // Dashboard work
-        // Dashboard work
-        public DashboardViewModel GetDashboardStats()
-        {
-            var totalCustomers = dbContext.ISP_Users.Count();
 
-            var totalRevenue = dbContext.ISP_Users
-                .Where(u => u.IsPaid == true && u.InternetPackage != null)
-                .Sum(u => u.Price);
-
-            var unpaidCustomers = dbContext.ISP_Users.Count(u => u.IsPaid == false);
-
-            var cost = dbContext.ISP_Users
-                .Where(u => u.IsPaid == true && u.InternetPackage != null)
-                .Sum(u => u.InternetPackage.Cost);
-
-            var profit = totalRevenue - cost;
-
-            // Fetch 5 most recent customers (assuming higher ID = more recent, or we could add CreatedAt)
-            var recentCustomers = dbContext.ISP_Users
-                .Include(u => u.InternetPackage)
-                .OrderByDescending(u => u.Id)
-                .Take(5)
-                .ToList();
-
-            // Calculate package distribution
-            var packageStats = dbContext.ISP_Users
-                .Where(u => u.InternetPackage != null)
-                .GroupBy(u => u.InternetPackage.PackageName)
-                .Select(g => new { Name = g.Key, Count = g.Count() })
-                .ToDictionary(k => k.Name, v => v.Count);
-
-            return new DashboardViewModel
-            {
-                TotalCustomers = totalCustomers,
-                TotalRevenue = totalRevenue,
-                UnpaidCustomers = unpaidCustomers,
-                Profit = profit,
-                RecentCustomers = recentCustomers,
-                PackageDistribution = packageStats
-            };
-        }
 
         public List<ISP_user> Get()
         {

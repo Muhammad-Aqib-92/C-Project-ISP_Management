@@ -82,6 +82,41 @@
             </div>
         </div>
     </div>
+    
+    <!-- Open Tickets Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-custom border-left-danger h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            Open Tickets
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.OpenTickets</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-ticket-alt fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Revenue Chart -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Revenue Overview</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area" style="height: 320px;">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -143,28 +178,114 @@
                 <h6 class="m-0 font-weight-bold text-primary">Package Popularity</h6>
             </div>
             <div class="card-body">
-                @foreach (var pkg in Model.PackageDistribution)
-                {
-                    // Calculate percentage for progress bar (simple estimation based on total count)
-                    var total = Model.TotalCustomers > 0 ? Model.TotalCustomers : 1;
-                    var percentage = (int)((double)pkg.Value / total * 100);
-                    var colorClass = percentage > 50 ? "bg-success" : (percentage > 20 ? "bg-info" : "bg-warning");
-
-                    <h4 class="small font-weight-bold">@pkg.Key <span class="float-right text-muted small">(@pkg.Value users)</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar @colorClass" role="progressbar" style="width: @percentage%"
-                             aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                }
-                @if (!Model.PackageDistribution.Any())
-                {
-                    <p class="text-center text-muted">No package data available.</p>
-                }
+                <div class="chart-pie pt-4 pb-2" style="height: 250px;">
+                    <canvas id="packageChart"></canvas>
+                </div>
+                <div class="mt-4 text-center small">
+                    @foreach(var pkg in Model.PackageDistribution)
+                    {
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> @pkg.Key (@pkg.Value)
+                        </span>
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @* Chat scripts removed *@
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Revenue Chart
+        var ctxRevenue = document.getElementById("revenueChart");
+        var revenueChart = new Chart(ctxRevenue, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.RevenueMonths)),
+                datasets: [{
+                    label: "Revenue",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: @Html.Raw(Json.Serialize(Model.RevenueAmounts)),
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
+                        },
+                        grid: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                }
+            }
+        });
+
+        // Package Distribution Chart
+        var ctxPie = document.getElementById("packageChart");
+        var packageChart = new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.PackageDistribution.Keys)),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model.PackageDistribution.Values)),
+                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                },
+                cutout: '80%',
+            },
+        });
+    </script>
 }

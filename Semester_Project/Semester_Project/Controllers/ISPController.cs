@@ -10,10 +10,12 @@ namespace Semester_Project6.Controllers
     public class ISPController : Controller
     {
         private readonly ISPuserinterface repo;
+        private readonly Semester_Project.Services.DashboardService _dashboardService;
 
-        public ISPController(ISPuserinterface repo)
+        public ISPController(ISPuserinterface repo, Semester_Project.Services.DashboardService dashboardService)
         {
             this.repo = repo;
+            _dashboardService = dashboardService;
         }
 
         // Chat Page
@@ -147,43 +149,16 @@ namespace Semester_Project6.Controllers
             return View();
         }
 
-        // Billing Page
-        public IActionResult Billing()
-        {
-            List<ISP_user> Data = repo.Get();
-            return View(Data);
-        }
 
-        // POST: Mark customer as paid
-        [HttpPost]
-        public IActionResult MarkAsPaid(int id)
-        {
-            repo.MarkAsPaid(id);
-            return RedirectToAction("Billing");
-        }
-
-        // Mark Customer as unpaid
-        [HttpPost]
-        public IActionResult MarkAsUnpaid(int id)
-        {
-            repo.MarkAsUnpaid(id);
-            return RedirectToAction("Billing");
-        }
 
         // Dashboard Dynamic
         public IActionResult Dashboard()
         {
-            var model = repo.GetDashboardStats();
+            var model = _dashboardService.GetDashboardViewModel();
             return View(model);
         }
 
-        //Reports
-        [Authorize]
-        public IActionResult Reports()
-        {
-            var users = repo.Get(); // Get all users with their package details
-            return View(users);     // Pass this list to the view
-        }
+
 
 
 

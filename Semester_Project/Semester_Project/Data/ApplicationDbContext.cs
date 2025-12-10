@@ -6,6 +6,9 @@ namespace Semester_Project.Data
 {
     public class ApplicationDbContext : IdentityDbContext<myappuser>
     {
+        public DbSet<PaymentHistory> PaymentHistories { get; set; }
+        public DbSet<SupportTicket> SupportTickets { get; set; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

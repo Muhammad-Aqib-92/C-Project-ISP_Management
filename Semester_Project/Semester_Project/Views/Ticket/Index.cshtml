@@ -1,0 +1,73 @@
+@model List<Semester_Project.Models.SupportTicket>
+@{
+    ViewData["Title"] = "Support Tickets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Support Tickets</h1>
+    <a asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus fa-sm text-white-50"></i> New Ticket
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ticket List</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model)
+                    {
+                        <tr>
+                            <td>#@ticket.Id</td>
+                            <td>@ticket.CreatedDate.ToShortDateString()</td>
+                            <td>@ticket.Subject</td>
+                            <td>@(ticket.User?.Name ?? "Unknown")</td>
+                            <td>
+                                @if (ticket.Status == Semester_Project.Models.TicketStatus.Resolved)
+                                {
+                                    <span class="badge bg-success">@ticket.Status</span>
+                                }
+                                else if (ticket.Status == Semester_Project.Models.TicketStatus.Pending)
+                                {
+                                    <span class="badge bg-warning">@ticket.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">@ticket.Status</span>
+                                }
+                            </td>
+                            <td>
+                                @if (ticket.Status != Semester_Project.Models.TicketStatus.Resolved)
+                                {
+                                    <form asp-action="MarkResolved" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="@ticket.Id" />
+                                        <button type="submit" class="btn btn-success btn-sm btn-circle" title="Mark Resolved">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                }
+                                <a asp-action="Delete" asp-route-id="@ticket.Id" class="btn btn-danger btn-sm btn-circle" onclick="return confirm('Are you sure?');">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

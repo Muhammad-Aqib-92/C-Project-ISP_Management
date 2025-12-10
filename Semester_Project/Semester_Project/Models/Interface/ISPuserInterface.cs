@@ -19,7 +19,7 @@ namespace Semester_Project6.Models.Interface
         List<InternetPackage> GetPackages();
         InternetPackage GetPackageById(int id);
 
-        public DashboardViewModel GetDashboardStats();
+
 
     }
 }
