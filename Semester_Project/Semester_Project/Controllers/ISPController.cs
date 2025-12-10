@@ -18,6 +18,15 @@ namespace Semester_Project6.Controllers
             _dashboardService = dashboardService;
         }
 
+        // GET: ISP
+        [Authorize(Policy = "RequireTechAccess")]
+        public IActionResult Index(string searchString)
+        {
+            ViewData["CurrentFilter"] = searchString;
+            List<ISP_user> Data = repo.Get(searchString);
+            return View("Customers", Data);
+        }
+
         // Chat Page
         public IActionResult Chat()
         {
@@ -29,7 +38,7 @@ namespace Semester_Project6.Controllers
         public IActionResult ChangeStatus(int id, bool isActive)
         {
             repo.UpdateUserStatus(id, isActive);
-            return RedirectToAction("UserList");
+            return RedirectToAction("Index");
         }
 
         // GET: Show the Edit form
@@ -53,7 +62,7 @@ namespace Semester_Project6.Controllers
                 bool isUpdated = repo.UpdateUser(updatedUser);
                 if (isUpdated)
                 {
-                    return RedirectToAction("Customers");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -82,7 +91,7 @@ namespace Semester_Project6.Controllers
             bool isDeleted = repo.DeleteUser(id);
             if (isDeleted)
             {
-                return RedirectToAction("Customers");
+                return RedirectToAction("Index");
             }
             return NotFound();
         }
@@ -110,7 +119,7 @@ namespace Semester_Project6.Controllers
                     }
                 }
                 repo.Add(user);
-                return RedirectToAction("Customers");
+                return RedirectToAction("Index");
             }
 
             ViewBag.Packages = repo.GetPackages();

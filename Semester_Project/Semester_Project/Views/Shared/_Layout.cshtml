@@ -24,7 +24,7 @@
                     
                     @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent") || User.IsInRole("FieldTech"))
                     {
-                        <a asp-controller="ISP" asp-action="Customers" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="ISP" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                             <i class="fas fa-users"></i> Customers
                         </a>
                     }
