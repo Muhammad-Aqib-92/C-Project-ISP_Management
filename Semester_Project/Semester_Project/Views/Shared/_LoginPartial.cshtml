@@ -2,25 +2,87 @@
 @inject SignInManager<myappuser> SignInManager
 @inject UserManager<myappuser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav align-items-center">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+    <!-- Notifications (Example) -->
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-bell fa-fw text-gray-400"></i>
+            <!-- Counter - Alerts -->
+            <span class="badge badge-danger badge-counter bg-danger" style="font-size: 0.5rem; position: relative; top: -8px; left: -5px;">3+</span>
+        </a>
+        <div class="dropdown-menu dropdown-list dropdown-menu-end shadow animated--grow-in" aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header bg-primary text-white border-0">
+                Alerts Center
+            </h6>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+                <div class="mr-3">
+                    <div class="icon-circle bg-primary text-white rounded-circle p-2">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                </div>
+                <div class="ms-2">
+                    <div class="small text-gray-500">December 12, 2025</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                </div>
+            </a>
+            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+        </div>
     </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
+
+    <!-- User Information Dropdown -->
+    <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small me-2" style="font-weight: 600;">@User.Identity?.Name</span>
+            <img class="img-profile rounded-circle" src="https://ui-avatars.com/api/?name=@User.Identity?.Name&background=random" style="width: 32px; height: 32px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        </a>
+        <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown" style="border: none; border-radius: 12px; overflow: hidden;">
+            <div class="px-3 py-2 text-center bg-light border-bottom">
+                 <p class="mb-0 font-weight-bold text-dark">@User.Identity?.Name</p>
+                 <small class="text-muted">User</small>
+            </div>
+            
+            @if (User.IsInRole("User"))
+            {
+                 <a class="dropdown-item py-2" asp-area="" asp-controller="User" asp-action="MyProfile">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400 me-2"></i>
+                    Profile
+                </a>
+                <a class="dropdown-item py-2" asp-area="" asp-controller="User" asp-action="MyBill">
+                    <i class="fas fa-file-invoice fa-sm fa-fw mr-2 text-gray-400 me-2"></i>
+                    My Bill
+                </a>
+            }
+             @if (User.IsInRole("Admin"))
+            {
+                 <a class="dropdown-item py-2" asp-area="" asp-controller="ISP" asp-action="Dashboard">
+                    <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400 me-2"></i>
+                    Dashboard
+                </a>
+            }
+
+            <a class="dropdown-item py-2" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400 me-2"></i>
+                Settings
+            </a>
+            <div class="dropdown-divider"></div>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="dropdown-item py-2 w-100 text-start text-danger">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger me-2"></i>
+                    Logout
+                </button>
+            </form>
+        </div>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="nav-link text-dark font-weight-bold" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-primary btn-sm ms-2 shadow-sm" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
 </ul>
