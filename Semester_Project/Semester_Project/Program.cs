@@ -27,6 +27,7 @@ builder.Services.AddSignalR();
 builder.Services.AddTransient<IEmailSender, Semester_Project.Services.EmailSender>();
 builder.Services.AddScoped<Semester_Project.Services.DashboardService>();
 builder.Services.AddScoped<Semester_Project.Services.InvoiceService>();
+builder.Services.AddHostedService<Semester_Project.Services.ExpirationCheckService>();
 
 
 

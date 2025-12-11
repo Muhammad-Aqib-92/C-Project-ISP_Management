@@ -46,6 +46,7 @@
                         {
                             <th>Price</th>
                         }
+                        <th>Expires In</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -67,6 +68,38 @@
                                     @(customer.Price.ToString("C"))
                                 </td>
                             }
+                            <td>
+                                @if (customer.IsPaid == true && customer.PackageExpiryDate.HasValue)
+                                {
+                                    var expiry = customer.PackageExpiryDate.Value;
+                                    var daysLeft = (expiry - DateTime.Today).Days;
+                                    
+                                    <div>
+                                        <small class="text-muted">@expiry.ToString("MMM dd, yyyy")</small>
+                                    </div>
+                                    
+                                    if (daysLeft < 0)
+                                    {
+                                        <span class="badge badge-danger">Expired (@Math.Abs(daysLeft) days ago)</span>
+                                    }
+                                    else if (daysLeft <= 5)
+                                    {
+                                        <span class="badge badge-warning">@daysLeft Days Left</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">@daysLeft Days Left</span>
+                                    }
+                                }
+                                else if (customer.IsPaid == true)
+                                {
+                                    <span class="text-muted">No Date</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-secondary">Unpaid</span>
+                                }
+                            </td>
                             <td>
                                 <a href="@Url.Action("EditCustomer", "ISP", new { id = customer.Id })" class="btn btn-warning btn-sm btn-circle" title="Edit">
                                     <i class="fas fa-edit"></i>

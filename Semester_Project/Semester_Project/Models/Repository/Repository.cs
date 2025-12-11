@@ -91,7 +91,9 @@ namespace Semester_Project6.Models.Repository
 
         public ISP_user? GetUserById(int id)
         {
-            return dbContext.ISP_Users.FirstOrDefault(u => u.Id == id);
+            return dbContext.ISP_Users
+                            .Include(u => u.InternetPackage)
+                            .FirstOrDefault(u => u.Id == id);
         }
 
         public bool UpdateCustomer(ISP_user updatedCustomer)

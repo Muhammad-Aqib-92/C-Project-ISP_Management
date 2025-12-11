@@ -34,7 +34,10 @@ namespace Semester_Project.Models
         [Precision(18, 2)]
         public decimal Cost { get; set; } = 0;
 
+
         // Link to ASP.NET Identity User
         public string? IdentityUserId { get; set; }
+
+        public DateTime? PackageExpiryDate { get; set; }
     }
 }

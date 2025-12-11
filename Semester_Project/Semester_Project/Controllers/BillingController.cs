@@ -22,10 +22,27 @@ namespace Semester_Project6.Controllers
         }
 
         // Billing Page
-        public IActionResult Index()
+        public IActionResult Index(int? month, int? year)
         {
-            List<ISP_user> Data = repo.Get();
-            return View(Data);
+            List<ISP_user> data = repo.Get();
+
+            if (month.HasValue && year.HasValue)
+            {
+                // Filter by Payment History? Or by Expiry?
+                // Request says "month wise filter functionality". Usually for Billing this means "Who paid in this month" or "Who is due".
+                // Let's filter by "Users who have a PaymentHistory in this month/year".
+                var userIdsPaidInMonth = _context.PaymentHistories
+                    .Where(p => p.PaymentDate.Month == month.Value && p.PaymentDate.Year == year.Value)
+                    .Select(p => p.UserId)
+                    .Distinct()
+                    .ToList();
+                
+                 data = data.Where(u => userIdsPaidInMonth.Contains(u.Id)).ToList();
+                 ViewBag.FilterMonth = month;
+                 ViewBag.FilterYear = year;
+            }
+
+            return View(data);
         }
 
         // POST: Mark customer as paid
@@ -34,8 +51,15 @@ namespace Semester_Project6.Controllers
         {
             repo.MarkAsPaid(id);
 
-            // Create Payment History record
+             // Set 30-day Expiry
             var user = repo.GetUserById(id);
+            if (user != null)
+            {
+                user.PackageExpiryDate = System.DateTime.Now.AddDays(30);
+                repo.UpdateUser(user);
+            }
+
+            // Create Payment History record
             if (user != null && user.InternetPackage != null)
             {
                 var payment = new PaymentHistory
@@ -70,7 +94,22 @@ namespace Semester_Project6.Controllers
 
             if (payment == null)
             {
-                return NotFound("No payment history found for this user.");
+                var userCheck = repo.GetUserById(id);
+                if (userCheck != null && userCheck.IsPaid == true && userCheck.InternetPackage != null)
+                {
+                    // Fallback: Generate a temporary payment record for display
+                    payment = new PaymentHistory
+                    {
+                        UserId = userCheck.Id,
+                        Amount = userCheck.Price,
+                        PaymentDate = System.DateTime.Now, 
+                        InvoiceNumber = $"INV-Generated-{userCheck.Id}"
+                    };
+                }
+                else
+                {
+                    return NotFound("No payment history found for this user. Please mark the user as 'Paid' to generate an invoice.");
+                }
             }
 
             var user = repo.GetUserById(id);

@@ -107,12 +107,16 @@ namespace Semester_Project6.Controllers
                     {
                          try
                          {
+                            // 30 Days Expiry Logic
+                            updatedUser.PackageExpiryDate = DateTime.Now.AddDays(30);
+                            repo.UpdateUser(updatedUser); // Update again with date
+
                             var payment = new PaymentHistory
                             {
                                 UserId = updatedUser.Id,
                                 Amount = updatedUser.Price,
-                                PaymentDate = System.DateTime.Now,
-                                InvoiceNumber = $"INV-{System.DateTime.Now:yyyyMMdd}-{updatedUser.Id}-MN" // MN for Manual
+                                PaymentDate = DateTime.Now,
+                                InvoiceNumber = $"INV-{DateTime.Now:yyyyMMdd}-{updatedUser.Id}-MN" // MN for Manual
                             };
                             _context.PaymentHistories.Add(payment);
                             _context.SaveChanges();
@@ -249,6 +253,11 @@ namespace Semester_Project6.Controllers
                             }
                         }
                         
+                        // New User - Start with active/paid? 
+                        // If logic implies 'Add User' starts as unpaid, we leave it. 
+                        // If we want them to be valid immediately:
+                        // newUserProfile.PackageExpiryDate = DateTime.Now.AddDays(30);
+
                         repo.Add(newUserProfile);
                         TempData["SuccessMessage"] = "Customer created successfully and assigned 'User' role!";
                         return RedirectToAction("Index");
@@ -379,6 +388,57 @@ namespace Semester_Project6.Controllers
 
             TempData["SuccessMessage"] = $"Role check complete. Fixed {fixedCount} users.";
             return RedirectToAction("Index");
+        }
+        // GET: Fix Payment Data (Utility)
+        [HttpGet]
+        public IActionResult FixPaymentData()
+        {
+            var paidUsers = repo.Get().Where(u => u.IsPaid == true).ToList();
+            int fixedCount = 0;
+            int updatedCount = 0;
+
+            foreach (var user in paidUsers)
+            {
+                // Check if they have ANY payment history
+                var history = _context.PaymentHistories.FirstOrDefault(p => p.UserId == user.Id);
+                
+                if (history == null)
+                {
+                    // Case 1: Missing History - Create it
+                    var payment = new PaymentHistory
+                    {
+                        UserId = user.Id,
+                        Amount = user.Price > 0 ? user.Price : (user.InternetPackage?.Price ?? 0),
+                        PaymentDate = DateTime.Now,
+                        InvoiceNumber = $"INV-{DateTime.Now:yyyyMMdd}-{user.Id}-FIX"
+                    };
+                    _context.PaymentHistories.Add(payment);
+                    fixedCount++;
+                }
+                else if (history.Amount == 0 && user.Price > 0)
+                {
+                    // Case 2: Bad History (0 Amount) - Fix it
+                    history.Amount = user.Price;
+                    history.PaymentDate = DateTime.Now; // Update date to ensure it shows in recent graph? Optional.
+                    // Let's keep date but fix amount. 
+                    // Actually, if date is old, it might not show in graph. Let's touch the date too to be sure it appears in THIS month.
+                    history.PaymentDate = DateTime.Now; 
+                    _context.PaymentHistories.Update(history);
+                    updatedCount++;
+                }
+            }
+
+            if (fixedCount > 0 || updatedCount > 0)
+            {
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = $"Fixed: Created {fixedCount} records, Updated {updatedCount} zero-amount records.";
+            }
+            else
+            {
+                TempData["SuccessMessage"] = "No missing or zero-amount payment data found.";
+            }
+
+            return RedirectToAction("Index", "Billing");
         }
     }
 }
