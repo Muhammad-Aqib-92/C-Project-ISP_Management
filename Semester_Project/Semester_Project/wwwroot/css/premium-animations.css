@@ -1,0 +1,128 @@
+/* ================= PREMIUM ANIMATIONS & EFFECTS ================= */
+
+/* Premium Button Ripple Effects */
+.btn {
+    position: relative;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced Form Inputs */
+.form-control,
+.form-select {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Premium Table Row Hover */
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(99, 102, 241, 0.05) !important;
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Animated Gradient Headers */
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+h1,
+h2,
+h3,
+.h3 {
+    background: linear-gradient(45deg, #6366f1, #0ea5e9, #6366f1);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 6s ease infinite;
+}
+
+/* Smooth Icon Hover */
+.fa {
+    transition: transform 0.3s ease;
+}
+
+.fa:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Glow Effect for Primary Buttons */
+@keyframes glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+    }
+}
+
+.btn-primary:not(:hover) {
+    animation: glow 3s ease-in-out infinite;
+}
+
+/* Smooth Page Transitions */
+.container-fluid {
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced Notification Badge */
+.badge {
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

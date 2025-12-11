@@ -17,7 +17,7 @@
             <!-- Counter - Alerts -->
             @if (unreadCount > 0)
             {
-                <span class="badge badge-danger badge-counter bg-danger" style="font-size: 0.5rem; position: relative; top: -8px; left: -5px;">@unreadCount</span>
+                <span class="badge badge-danger badge-counter bg-danger" id="notificationBadge" style="font-size: 0.5rem; position: relative; top: -8px; left: -5px;">@unreadCount</span>
             }
         </a>
         <div class="dropdown-menu dropdown-list dropdown-menu-end shadow animated--grow-in" aria-labelledby="alertsDropdown">
@@ -48,6 +48,25 @@
             <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
         </div>
     </li>
+
+    <script>
+        // Mark all notifications as read when dropdown opens
+        document.getElementById('alertsDropdown').addEventListener('show.bs.dropdown', function () {
+            fetch('/Notification/MarkAllAsRead', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]')?.value
+                }
+            }).then(() => {
+                // Hide the badge
+                const badge = document.getElementById('notificationBadge');
+                if (badge) {
+                    badge.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <!-- User Information Dropdown -->
     <li class="nav-item dropdown no-arrow">

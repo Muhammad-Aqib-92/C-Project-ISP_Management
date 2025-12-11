@@ -29,7 +29,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                    <tbody>
                     @foreach (var ticket in Model)
                     {
                         <tr>
@@ -57,7 +57,7 @@
                                 {
                                     if (ticket.Status != Semester_Project.Models.TicketStatus.Resolved)
                                     {
-                                        <button type="button" class="btn btn-success btn-sm btn-circle" data-bs-toggle="modal" data-bs-target="#resolveModal" onclick="setResolveId(@ticket.Id)">
+                                        <button type="button" class="btn btn-success btn-sm btn-circle" onclick="toggleResolveForm(@ticket.Id)">
                                             <i class="fas fa-check"></i>
                                         </button>
                                     }
@@ -67,6 +67,28 @@
                                 }
                             </td>
                         </tr>
+                        @if (User.IsInRole("Admin") && ticket.Status != Semester_Project.Models.TicketStatus.Resolved)
+                        {
+                            <tr id="resolveForm_@ticket.Id" style="display: none;" class="bg-light">
+                                <td colspan="@(User.IsInRole("Admin") ? "7" : "6")">
+                                    <form asp-action="MarkResolved" method="post" class="p-3">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@ticket.Id" />
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Resolution Remarks</label>
+                                            <textarea class="form-control" name="remarks" rows="3" required 
+                                                      placeholder="Enter details about how the issue was resolved..."></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            <i class="fas fa-check me-1"></i> Mark as Resolved
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="toggleResolveForm(@ticket.Id)">
+                                            Cancel
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -74,34 +96,21 @@
     </div>
 </div>
 
-<!-- Resolve Modal -->
-<div class="modal fade" id="resolveModal" tabindex="-1" role="dialog" aria-labelledby="resolveModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="resolveModalLabel">Resolve Ticket</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form asp-action="MarkResolved" method="post">
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="resolveTicketId" />
-                    <div class="mb-3">
-                        <label for="remarks" class="form-label">Resolution Remarks</label>
-                        <textarea class="form-control" name="remarks" id="remarks" rows="3" required placeholder="Enter details about how the issue was resolved..."></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Mark as Resolved</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
-    function setResolveId(id) {
-        document.getElementById('resolveTicketId').value = id;
+    function toggleResolveForm(ticketId) {
+        var form = document.getElementById('resolveForm_' + ticketId);
+        if (form.style.display === 'none') {
+            form.style.display = 'table-row';
+            // Focus on textarea
+            var textarea = form.querySelector('textarea');
+            if (textarea) {
+                setTimeout(function() {
+                    textarea.focus();
+                }, 100);
+            }
+        } else {
+            form.style.display = 'none';
+        }
     }
 </script>
 

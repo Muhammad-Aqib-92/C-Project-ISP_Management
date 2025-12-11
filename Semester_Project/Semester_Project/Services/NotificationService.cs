@@ -12,6 +12,7 @@ namespace Semester_Project.Services
         Task<List<Notification>> GetUserNotificationsAsync(string userId, int count = 5);
         Task<int> GetUnreadCountAsync(string userId);
         Task MarkAsReadAsync(int notificationId);
+        Task MarkAllAsReadAsync(string userId);
         Task AddNotificationAsync(string userId, string title, string message, string type = "Info", string link = "#");
     }
 
@@ -46,6 +47,23 @@ namespace Semester_Project.Services
             if (notification != null)
             {
                 notification.IsRead = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task MarkAllAsReadAsync(string userId)
+        {
+            var unreadNotifications = await _context.Notifications
+                .Where(n => n.UserId == userId && !n.IsRead)
+                .ToListAsync();
+            
+            foreach (var notification in unreadNotifications)
+            {
+                notification.IsRead = true;
+            }
+            
+            if (unreadNotifications.Any())
+            {
                 await _context.SaveChangesAsync();
             }
         }

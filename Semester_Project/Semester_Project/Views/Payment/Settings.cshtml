@@ -1,0 +1,64 @@
+@model Semester_Project.Models.PaymentSetting
+@{
+    ViewData["Title"] = "Payment Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center animate__animated animate__fadeIn">
+    <div class="col-md-8">
+        <div class="card card-custom shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Bank Account Details (For Users)</h6>
+            </div>
+            <div class="card-body">
+                <form asp-action="Settings" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="BankName" class="control-label font-weight-bold text-gray-700"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-right-0"><i class="fas fa-university"></i></span>
+                            <input asp-for="BankName" class="form-control" placeholder="e.g. Bank of America" />
+                        </div>
+                        <span asp-validation-for="BankName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="AccountTitle" class="control-label font-weight-bold text-gray-700"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-right-0"><i class="fas fa-user-tie"></i></span>
+                            <input asp-for="AccountTitle" class="form-control" placeholder="e.g. Muhammad Aqib" />
+                        </div>
+                        <span asp-validation-for="AccountTitle" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="AccountNumber" class="control-label font-weight-bold text-gray-700"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-right-0"><i class="fas fa-hashtag"></i></span>
+                            <input asp-for="AccountNumber" class="form-control" placeholder="e.g. 1234-5678-9012" />
+                        </div>
+                        <span asp-validation-for="AccountNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Instructions" class="control-label font-weight-bold text-gray-700"></label>
+                        <textarea asp-for="Instructions" class="form-control" rows="3" placeholder="Additional instructions for users (e.g. Send screenshot via WhatsApp)"></textarea>
+                        <span asp-validation-for="Instructions" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill shadow">
+                            <i class="fas fa-save mr-2"></i> Save Settings
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Semester_Project.Data;
 using Semester_Project.Models;
 using Semester_Project6.Models.Interface;
@@ -71,6 +72,70 @@ namespace Semester_Project.Controllers
 
             ViewBag.PaymentHistory = history;
             return View(customer);
+        }
+
+        // GET: /User/MakePayment
+        public async Task<IActionResult> MakePayment()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return NotFound();
+
+            var allCustomers = _repo.Get();
+            var customer = allCustomers.FirstOrDefault(c => c.Email == user.Email);
+            if (customer == null) return NotFound();
+
+            var settings = await _context.PaymentSettings.FirstOrDefaultAsync();
+            ViewBag.PaymentSettings = settings;
+
+            var model = new PaymentVerification
+            {
+                ISP_userId = customer.Id,
+                Amount = customer.Price
+            };
+
+            return View(model);
+        }
+
+        // POST: /User/MakePayment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MakePayment(PaymentVerification model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Status = "Pending";
+                model.CreatedAt = DateTime.Now;
+                _context.PaymentVerifications.Add(model);
+                
+                // Get customer details for notification
+                var customer = await _context.ISP_Users.FindAsync(model.ISP_userId);
+                
+                // Notify All Admins
+                var adminUsers = await _userManager.GetUsersInRoleAsync("Admin");
+                foreach (var admin in adminUsers)
+                {
+                    var transactionInfo = !string.IsNullOrEmpty(model.TransactionReference) 
+                        ? $" - Reference: {model.TransactionReference}" 
+                        : "";
+                    
+                    _context.Notifications.Add(new Notification
+                    {
+                        UserId = admin.Id,
+                        Title = "💰 New Payment Verification",
+                        Message = $"{customer?.Name ?? "Customer"} submitted a payment verification for {model.Amount:C}{transactionInfo}. Click to review.",
+                        Type = "Info",
+                        Link = "/Payment/Verifications"
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Payment verification requested successfully. You will be notified once admin reviews it.";
+                return RedirectToAction(nameof(MyProfile));
+            }
+            // Reload settings if error
+            var settings = await _context.PaymentSettings.FirstOrDefaultAsync();
+            ViewBag.PaymentSettings = settings;
+            return View(model);
         }
     }
 }

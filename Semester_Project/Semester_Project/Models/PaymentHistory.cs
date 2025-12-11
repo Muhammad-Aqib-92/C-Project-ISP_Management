@@ -19,6 +19,8 @@ namespace Semester_Project.Models
 
         public DateTime PaymentDate { get; set; } = DateTime.Now;
 
+        public string? PaymentMethod { get; set; }
+
         public string InvoiceNumber { get; set; }
     }
 }

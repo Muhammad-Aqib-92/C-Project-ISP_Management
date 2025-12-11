@@ -6,6 +6,7 @@
         public int PaidCustomers { get; set; } // New Property
         public decimal TotalRevenue { get; set; }
         public int UnpaidCustomers { get; set; }
+        public decimal PendingAmount { get; set; } // New Property
         public decimal Profit { get; set; }
 
         // New properties for enhanced dashboard

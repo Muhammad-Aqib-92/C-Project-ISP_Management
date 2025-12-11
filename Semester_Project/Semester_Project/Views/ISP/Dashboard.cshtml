@@ -4,24 +4,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+<!-- Welcome Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px;">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between text-white">
+                    <div>
+                        <h2 class="mb-1" style="-webkit-text-fill-color: white;">
+                            <i class="fas fa-hand-wave me-2"></i>Welcome back, @User.Identity?.Name!
+                        </h2>
+                        <p class="mb-0 opacity-75">Here's what's happening with your ISP today.</p>
+                    </div>
+                    <div class="text-end d-none d-md-block">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="text-center">
+                                <div class="fs-3 fw-bold">@DateTime.Now.ToString("dd")</div>
+                                <div class="small opacity-75">@DateTime.Now.ToString("MMM yyyy")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <!-- Earnings (Monthly) Card Example -->
+    <!-- Total Customers Card -->
     <div class="col-xl-3 col-md-6 mb-4">
         <a asp-controller="ISP" asp-action="Index" class="text-decoration-none">
-            <div class="card card-custom border-left-primary shadow h-100 py-2 transform-hover animate__animated animate__fadeInUp">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Customers
+            <div class="card border-0 shadow-sm h-100 transform-hover animate__animated animate__fadeInUp" style="border-radius: 16px; overflow: hidden;">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="flex-grow-1">
+                            <div class="text-uppercase fw-bold mb-1" style="font-size: 0.75rem; color: #6366f1; letter-spacing: 0.5px;">
+                                <i class="fas fa-users me-1"></i> Total Customers
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalCustomers</div>
+                            <div class="h2 mb-0 fw-bold" style="color: #1e293b;">@Model.TotalCustomers</div>
+                            <small class="text-muted">Active accounts</small>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-users fa-2x text-white"></i>
                         </div>
                     </div>
                 </div>
@@ -29,18 +53,20 @@
         </a>
     </div>
 
-    <!-- Earnings (Monthly) Card Example -->
+    <!-- Total Revenue Card -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-custom border-left-success h-100 py-2 animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Total Revenue
+        <div class="card border-0 shadow-sm h-100 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.1s; border-radius: 16px; overflow: hidden;">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="flex-grow-1">
+                        <div class="text-uppercase fw-bold mb-1" style="font-size: 0.75rem; color: #10b981; letter-spacing: 0.5px;">
+                            <i class="fas fa-dollar-sign me-1"></i> Total Revenue
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.TotalRevenue</div>
+                        <div class="h2 mb-0 fw-bold" style="color: #1e293b;">$@Model.TotalRevenue</div>
+                        <small class="text-muted">All time earnings</small>
                     </div>
-                    <div class="col-auto">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-dollar-sign fa-2x text-white"></i>
                     </div>
                 </div>
             </div>
@@ -48,20 +74,21 @@
     </div>
 
     <!-- Warnings Card Example -->
-    <!-- Warnings Card Example -->
+    <!-- Unpaid Customers Card -->
     <div class="col-xl-3 col-md-6 mb-4">
         <a asp-controller="ISP" asp-action="Index" asp-route-status="unpaid" class="text-decoration-none">
-            <div class="card card-custom border-left-danger shadow h-100 py-2 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Unpaid Customers
+            <div class="card border-0 shadow-sm h-100 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.2s; border-radius: 16px; overflow: hidden;">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="flex-grow-1">
+                            <div class="text-uppercase fw-bold mb-1" style="font-size: 0.75rem; color: #ef4444; letter-spacing: 0.5px;">
+                                <i class="fas fa-exclamation-triangle me-1"></i> Unpaid  
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.UnpaidCustomers</div>
+                            <div class="h2 mb-0 fw-bold" style="color: #1e293b;">@Model.UnpaidCustomers</div>
+                            <small class="text-muted">Needs attention</small>
                         </div>
-                         <div class="col-auto">
-                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);">
+                            <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
                         </div>
                     </div>
                 </div>
@@ -69,20 +96,21 @@
         </a>
     </div>
 
-    <!-- Paid Customer Card Example -->
+    <!-- Paid Customers Card -->
     <div class="col-xl-3 col-md-6 mb-4">
         <a asp-controller="ISP" asp-action="Index" asp-route-status="paid" class="text-decoration-none">
-            <div class="card card-custom border-left-success shadow h-100 py-2 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Paid Customers
+            <div class="card border-0 shadow-sm h-100 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.3s; border-radius: 16px; overflow: hidden;">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="flex-grow-1">
+                            <div class="text-uppercase fw-bold mb-1" style="font-size: 0.75rem; color: #10b981; letter-spacing: 0.5px;">
+                                <i class="fas fa-check-circle me-1"></i> Paid Customers
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PaidCustomers</div>
+                            <div class="h2 mb-0 fw-bold" style="color: #1e293b;">@Model.PaidCustomers</div>
+                            <small class="text-muted">Active & paid</small>
                         </div>
-                         <div class="col-auto">
-                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="fas fa-check-circle fa-2x text-white"></i>
                         </div>
                     </div>
                 </div>
@@ -94,7 +122,7 @@
     {
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-custom border-left-success h-100 py-2 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+            <div class="card card-custom border-left-success shadow h-100 py-2 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -113,7 +141,7 @@
 
         <!-- Profit Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-custom border-left-info h-100 py-2 animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+            <div class="card card-custom border-left-info shadow h-100 py-2 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -128,6 +156,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Pending Amount Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a asp-action="Index" asp-route-status="unpaid" class="text-decoration-none">
+                <div class="card card-custom border-left-warning h-100 py-2 transform-hover animate__animated animate__fadeInUp" style="animation-delay: 0.55s">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Pending Collection
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$@Model.PendingAmount</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
     }
     else

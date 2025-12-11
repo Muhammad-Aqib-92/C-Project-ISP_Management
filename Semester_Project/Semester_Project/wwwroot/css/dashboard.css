@@ -86,6 +86,17 @@ body {
     background-color: #94a3b8;
 }
 
+/* Card Hover Transform Effect - Popup Animation */
+.transform-hover {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.transform-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(99, 102, 241, 0.1) !important;
+}
+
 /* Button Tactile Click Effect */
 .btn:active,
 .list-group-item:active {
@@ -539,4 +550,5 @@ body {
         margin-left: 0;
         box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
     }
-}
+} 
+ 

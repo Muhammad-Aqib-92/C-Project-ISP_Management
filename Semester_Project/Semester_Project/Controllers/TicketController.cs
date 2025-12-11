@@ -137,6 +137,7 @@ namespace Semester_Project.Controllers
 
         // POST: Resolve Ticket (Admin only)
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public IActionResult MarkResolved(int id, string remarks)
         {

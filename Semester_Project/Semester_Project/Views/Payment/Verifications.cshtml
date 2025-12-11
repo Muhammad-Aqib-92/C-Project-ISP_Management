@@ -1,0 +1,105 @@
+@model IEnumerable<Semester_Project.Models.PaymentVerification>
+@{
+    ViewData["Title"] = "Payment Verifications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row animate__animated animate__fadeIn">
+    <div class="col-12">
+        <div class="card card-custom shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Payment Verification Requests</h6>
+                <a asp-action="Settings" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="fas fa-cog mr-1"></i> Payment Settings
+                </a>
+            </div>
+            <div class="card-body">
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-custom table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Transaction Ref</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="font-weight-bold">@item.ISP_User.Name</div>
+                                            <div class="small text-muted">@item.ISP_User.Email</div>
+                                        </td>
+                                        <td class="font-weight-bold">@item.Amount.ToString("C")</td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.TransactionReference))
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@item.TransactionReference</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div>@item.CreatedAt.ToString("MMM dd, yyyy")</div>
+                                            <div class="small text-muted">@item.CreatedAt.ToString("hh:mm tt")</div>
+                                        </td>
+                                        <td>
+                                            @if (item.Status == "Pending")
+                                            {
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                            }
+                                            else if (item.Status == "Approved")
+                                            {
+                                                <span class="badge bg-success">Approved</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Rejected</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.Status == "Pending")
+                                            {
+                                                <form asp-action="Approve" asp-route-id="@item.Id" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this payment?')">
+                                                        <i class="fas fa-check"></i> Approve
+                                                    </button>
+                                                </form>
+                                                <form asp-action="Reject" asp-route-id="@item.Id" method="post" style="display: inline;">
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Reject this payment?')">
+                                                        <i class="fas fa-times"></i> Reject
+                                                    </button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted small">
+                                                    Processed @item.ProcessedAt?.ToString("MMM dd")
+                                                </span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info text-center">
+                        <i class="fas fa-info-circle fa-2x mb-2"></i>
+                        <p class="mb-0">No payment verification requests yet.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

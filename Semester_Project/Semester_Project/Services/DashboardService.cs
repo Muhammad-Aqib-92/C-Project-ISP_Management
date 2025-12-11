@@ -25,6 +25,10 @@ namespace Semester_Project.Services
                 .Sum(u => u.Price);
 
             var unpaidCustomers = _context.ISP_Users.Count(u => u.IsPaid == false);
+            var pendingAmount = _context.ISP_Users
+                .Where(u => u.IsPaid == false)
+                .Sum(u => u.Price);
+
             var paidCustomers = _context.ISP_Users.Count(u => u.IsPaid == true);
 
             var cost = _context.ISP_Users
@@ -76,6 +80,7 @@ namespace Semester_Project.Services
                 TotalCustomers = totalCustomers,
                 TotalRevenue = totalRevenue,
                 UnpaidCustomers = unpaidCustomers,
+                PendingAmount = pendingAmount,
                 PaidCustomers = paidCustomers,
                 Profit = profit,
                 RecentCustomers = recentCustomers,

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/premium-animations.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <body class="@ViewData["BodyClass"]">
@@ -40,6 +41,12 @@
                         </a>
                         <a asp-controller="Billing" asp-action="Index" class="list-group-item">
                             <i class="fas fa-file-invoice-dollar"></i> Billing
+                        </a>
+                        <a asp-controller="Payment" asp-action="Settings" class="list-group-item">
+                            <i class="fas fa-cog"></i> Payment Settings
+                        </a>
+                        <a asp-controller="Payment" asp-action="Verifications" class="list-group-item">
+                            <i class="fas fa-check-circle"></i> Payment Verifications
                         </a>
                         <a asp-controller="Report" asp-action="Index" class="list-group-item">
                             <i class="fas fa-chart-bar"></i> Reports
@@ -83,16 +90,20 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search me-auto">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" style="border-radius: 20px 0 0 20px;">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" style="border-radius: 0 20px 20px 0;">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                    <!-- Topbar Search -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search me-auto">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for customers, tickets..." aria-label="Search" aria-describedby="basic-addon2" style="border-radius: 20px 0 0 20px;">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" style="border-radius: 0 20px 20px 0;">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    }
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">

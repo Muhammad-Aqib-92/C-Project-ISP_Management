@@ -9,6 +9,8 @@ namespace Semester_Project.Data
         public DbSet<PaymentHistory> PaymentHistories { get; set; }
         public DbSet<SupportTicket> SupportTickets { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<PaymentSetting> PaymentSettings { get; set; }
+        public DbSet<PaymentVerification> PaymentVerifications { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

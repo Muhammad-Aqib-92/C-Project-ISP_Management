@@ -1,0 +1,112 @@
+@model Semester_Project.Models.PaymentVerification
+@{
+    ViewData["Title"] = "Make Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var settings = ViewBag.PaymentSettings as Semester_Project.Models.PaymentSetting;
+}
+
+<div class="row justify-content-center animate__animated animate__fadeIn">
+    <div class="col-md-10">
+        <!-- Payment Instructions Card -->
+        @if (settings != null)
+        {
+            <div class="card border-0 shadow-lg mb-4" style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; border-radius: 20px;">
+                <div class="card-body p-4">
+                    <h3 class="font-weight-bold mb-3"><i class="fas fa-university mr-2"></i> Bank Account Details</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-white-50 small text-uppercase mb-1">Bank Name</div>
+                            <div class="h5 font-weight-bold">@settings.BankName</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-white-50 small text-uppercase mb-1">Account Title</div>
+                            <div class="h5 font-weight-bold">@settings.AccountTitle</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-white-50 small text-uppercase mb-1">Account Number</div>
+                            <div class="h5 font-weight-bold">@settings.AccountNumber</div>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(settings.Instructions))
+                    {
+                        <div class="alert alert-light mt-3 border-0">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <strong>Instructions:</strong> @settings.Instructions
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                Payment information is not configured yet. Please contact support.
+            </div>
+        }
+
+        <!-- Payment Verification Form -->
+        <div class="card card-custom shadow">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Submit Payment Verification</h6>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info border-0 bg-light">
+                    <i class="fas fa-lightbulb text-warning mr-2"></i>
+                    After making the payment via bank transfer, fill in the form below to notify our team for verification.
+                </div>
+
+                <form asp-action="MakePayment" method="post">
+                    <input type="hidden" asp-for="ISP_userId" />
+                    <input type="hidden" asp-for="Amount" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="font-weight-bold text-gray-700">Payment Amount</label>
+                            <div class="form-control bg-light" style="font-size: 1.5rem; font-weight: bold; color: #10b981;">
+                                @Model.Amount.ToString("C")
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TransactionReference" class="font-weight-bold text-gray-700"></label>
+                            <input asp-for="TransactionReference" class="form-control" placeholder="e.g. TXN12345 or Receipt Number" />
+                            <span asp-validation-for="TransactionReference" class="text-danger small"></span>
+                            <small class="form-text text-muted">
+                                <i class="fas fa-info-circle"></i> Optional: Enter your transaction ID or reference number
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-5 py-3 shadow" style="border-radius: 50px; font-weight: 700;">
+                            <i class="fas fa-check-circle mr-2"></i> I Have Made the Payment
+                        </button>
+                        <div class="mt-3">
+                            <a asp-action="MyProfile" class="text-muted">
+                                <i class="fas fa-arrow-left mr-1"></i> Back to Profile
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Help Card -->
+        <div class="card border-0 bg-light mt-4">
+            <div class="card-body text-center">
+                <i class="fas fa-headset fa-2x text-primary mb-2"></i>
+                <h6 class="font-weight-bold">Need Help?</h6>
+                <p class="mb-2">If you're having trouble making a payment, please contact our support team.</p>
+                <a asp-controller="Ticket" asp-action="Create" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="fas fa-ticket-alt mr-1"></i> Create Support Ticket
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
