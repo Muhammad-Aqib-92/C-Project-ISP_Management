@@ -1,16 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<myappuser> SignInManager
 @inject UserManager<myappuser> UserManager
+@inject Semester_Project.Services.INotificationService NotificationService
 
 <ul class="navbar-nav align-items-center">
 @if (SignInManager.IsSignedIn(User))
 {
-@inject Semester_Project.Services.INotificationService NotificationService
-@{
     var userId = UserManager.GetUserId(User);
     var notifications = await NotificationService.GetUserNotificationsAsync(userId);
     var unreadCount = await NotificationService.GetUnreadCountAsync(userId);
-}
 
     <!-- Notifications -->
     <li class="nav-item dropdown no-arrow mx-1">
