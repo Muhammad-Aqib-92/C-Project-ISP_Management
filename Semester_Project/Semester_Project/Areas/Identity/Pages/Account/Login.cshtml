@@ -3,137 +3,58 @@
 
 @{
     ViewData["Title"] = "Log in";
-    ViewData["HideNavBar"] = true;  // This hides navbar in the shared layout
+    ViewData["HideNavBar"] = true;
+    ViewData["BodyClass"] = "login-page";
 }
 
-<style>
-    /* Scoped body style for background only */
-    body {
-        margin: 0;
-        padding: 0;
-        background: url('/images/background.jpg') no-repeat center center fixed;
-        background-size: cover;
-        font-family: 'Segoe UI', sans-serif;
-    }
+<!-- Link to new Premium CSS -->
+<link rel="stylesheet" href="~/css/login.css" />
 
-    .login-wrapper {
-        min-height: 90vh; /* Full viewport height minus simplified footer/padding */
-        display: flex;
-        justify-content: flex-end; /* Horizontal Right */
-        align-items: center;     /* Vertical Center */
-        padding-right: 5%;
-    }
-
-    .card-glass {
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2.5rem;
-        /* margin-right: 5%; Removed, handled by wrapper padding */
-        width: 100%;
-        max-width: 400px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #fff;
-    }
-
-    h2 {
-        color: #fff;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-    .form-control {
-        background-color: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: #fff;
-    }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .form-control:focus {
-            background-color: rgba(255, 255, 255, 0.3);
-            color: #fff;
-            box-shadow: none;
-        }
-
-    label {
-        color: #fff;
-    }
-
-    .btn-group-custom {
-        display: flex;
-        gap: 10px;
-    }
-
-    .btn-primary, .btn-secondary {
-        border: none;
-        padding: 0.6rem 1.2rem;
-        font-size: 1rem;
-        border-radius: 10px;
-        transition: 0.3s ease;
-    }
-
-    .btn-primary {
-        background-color: #2196f3;
-        color: white;
-    }
-
-        .btn-primary:hover {
-            background-color: #1769aa;
-        }
-
-    .btn-secondary {
-        background-color: #eeeeee;
-        color: #000;
-    }
-
-        .btn-secondary:hover {
-            background-color: #d6d6d6;
-        }
-
-    .text-danger {
-        color: #ffb3b3 !important;
-    }
-</style>
-
-<div class="login-wrapper">
+<div class="auth-wrapper">
     <div class="card-glass">
-        <form id="account" method="post" target="_self">
-            <h2>Login</h2>
+        <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Enter your credentials to access the dashboard</p>
+        </div>
+
+        <form id="account" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
 
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <label asp-for="Input.Email">Email Address</label>
+                <span asp-validation-for="Input.Email" class="text-danger small"></span>
             </div>
 
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Password" />
                 <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <span asp-validation-for="Input.Password" class="text-danger small"></span>
             </div>
 
-            <div class="form-check mb-3">
-                <input class="form-check-input" asp-for="Input.RememberMe" />
-                <label class="form-check-label" asp-for="Input.RememberMe">
-                    @Html.DisplayNameFor(m => m.Input.RememberMe)
-                </label>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">
+                        Remember me
+                    </label>
+                </div>
             </div>
 
-            <div class="btn-group-custom mb-3">
-                <button type="submit" class="btn btn-primary w-100">Log in</button>
-                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-secondary w-100 text-center">Register</a>
-            </div>
-
-            <div class="text-center">
-                <a id="forgot-password" asp-page="./ForgotPassword" class="text-white">Forgot your password?</a>
-            </div>
+            <button type="submit" class="btn btn-auth">Log In</button>
         </form>
+
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-auth btn-auth-secondary">
+            Create New Account
+        </a>
+
+        <div class="auth-links mt-4">
+            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+        </div>
     </div>
 </div>
 

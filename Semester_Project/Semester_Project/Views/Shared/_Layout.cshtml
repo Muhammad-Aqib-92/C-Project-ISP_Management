@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
-<body>
+<body class="@ViewData["BodyClass"]">
     <!-- Page Loader -->
     <div id="page-loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; bg-color: red; background-color: #f8fafc; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out;">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
@@ -22,46 +22,48 @@
         @if (User.Identity.IsAuthenticated && (ViewData["HideNavBar"] == null || !(bool)ViewData["HideNavBar"]))
         {
             <!-- Sidebar -->
-            <div class="bg-primary border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading text-white">ISP Manager</div>
+            <div id="sidebar-wrapper">
+                <div class="sidebar-heading">
+                    <i class="fas fa-wifi"></i> ISP Manager
+                </div>
                 <div class="list-group list-group-flush">
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-controller="ISP" asp-action="Dashboard" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="ISP" asp-action="Dashboard" class="list-group-item">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
-                        <a asp-controller="ISP" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="ISP" asp-action="Index" class="list-group-item">
                             <i class="fas fa-users"></i> Customers
                         </a>
-                        <a asp-controller="InternetPackage" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="InternetPackage" asp-action="Index" class="list-group-item">
                             <i class="fas fa-box"></i> Packages
                         </a>
-                        <a asp-controller="Billing" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="Billing" asp-action="Index" class="list-group-item">
                             <i class="fas fa-file-invoice-dollar"></i> Billing
                         </a>
-                        <a asp-controller="Report" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="Report" asp-action="Index" class="list-group-item">
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>
-                        <a asp-controller="Ticket" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="Ticket" asp-action="Index" class="list-group-item">
                             <i class="fas fa-headset"></i> Support Tickets
                         </a>
-                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item">
                             <i class="fas fa-key"></i> Change Password
                         </a>
                     }
                     
                     @if (User.IsInRole("User"))
                     {
-                        <a asp-controller="User" asp-action="MyProfile" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="User" asp-action="MyProfile" class="list-group-item">
                             <i class="fas fa-user"></i> My Profile
                         </a>
-                        <a asp-controller="User" asp-action="MyBill" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="User" asp-action="MyBill" class="list-group-item">
                             <i class="fas fa-file-invoice"></i> My Bill
                         </a>
-                        <a asp-controller="Ticket" asp-action="Create" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="Ticket" asp-action="Create" class="list-group-item">
                             <i class="fas fa-headset"></i> Contact Support
                         </a>
-                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item">
                             <i class="fas fa-key"></i> Change Password
                         </a>
                     }
@@ -108,6 +110,11 @@
     </div>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top" style="display: none; position: fixed; bottom: 30px; right: 30px; z-index: 1000; width: 40px; height: 40px; background: rgba(99, 102, 241, 0.8); color: white; border-radius: 50%; text-align: center; line-height: 40px; transition: all 0.3s; backdrop-filter: blur(5px);">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -116,6 +123,27 @@
         $(document).ready(function() {
             // Fade out loader
             $("#page-loader").fadeOut(500);
+
+            // Toggle Sidebar
+            $(".navbar-toggler").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+            
+            // Scroll to Top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100) {
+                    $('.scroll-to-top').fadeIn();
+                } else {
+                    $('.scroll-to-top').fadeOut();
+                }
+            });
+
+            // Smooth scrolling to top
+            $('.scroll-to-top').click(function(e) {
+                e.preventDefault();
+                $('html, body').animate({scrollTop:0}, '300');
+            });
 
             @if (TempData["SuccessMessage"] != null)
             {

@@ -264,74 +264,87 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Revenue Chart
-        var ctxRevenue = document.getElementById("revenueChart");
+        // Global Chart Defaults
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#64748b';
+        Chart.defaults.scale.grid.borderColor = '#f1f5f9';
+        
+        // Revenue Chart with Gradient
+        var ctxRevenue = document.getElementById("revenueChart").getContext("2d");
+        
+        // Create Gradient
+        var gradientFill = ctxRevenue.createLinearGradient(0, 0, 0, 400);
+        gradientFill.addColorStop(0, "rgba(99, 102, 241, 0.4)"); // Primary color high alpha
+        gradientFill.addColorStop(1, "rgba(99, 102, 241, 0.0)"); // Primary color transparent
+
         var revenueChart = new Chart(ctxRevenue, {
             type: 'line',
             data: {
                 labels: @Html.Raw(Json.Serialize(Model.RevenueMonths)),
                 datasets: [{
                     label: "Revenue",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    tension: 0.4, // Smooth curves
+                    backgroundColor: gradientFill,
+                    borderColor: "#6366f1", // Primary Color
+                    pointRadius: 4,
+                    pointBackgroundColor: "#fff",
+                    pointBorderColor: "#6366f1",
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: "#6366f1",
+                    pointHoverBorderColor: "#fff",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
+                    fill: true, // Fill under the line
                     data: @Html.Raw(Json.Serialize(Model.RevenueAmounts)),
                 }],
             },
             options: {
                 maintainAspectRatio: false,
                 layout: {
-                    padding: {
-                        left: 10,
-                        right: 25,
-                        top: 25,
-                        bottom: 0
-                    }
+                    padding: { left: 10, right: 25, top: 25, bottom: 0 }
                 },
                 scales: {
                     x: {
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        },
-                        ticks: {
-                            maxTicksLimit: 7
-                        }
+                        grid: { display: false, drawBorder: false },
+                        ticks: { maxTicksLimit: 7 }
                     },
                     y: {
                         ticks: {
                             maxTicksLimit: 5,
                             padding: 10,
-                            callback: function(value, index, values) {
-                                return '$' + value;
-                            }
+                            callback: function(value) { return '$' + value; }
                         },
                         grid: {
-                            color: "rgb(234, 236, 244)",
-                            zeroLineColor: "rgb(234, 236, 244)",
+                            color: "#f1f5f9",
+                            borderDash: [5, 5],
                             drawBorder: false,
-                            borderDash: [2],
-                            zeroLineBorderDash: [2]
                         }
                     },
                 },
                 plugins: {
-                    legend: {
-                        display: false
-                    },
-                }
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) { 
+                                return '$ ' + context.parsed.y;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
             }
         });
 
-        // Package Distribution Chart
+        // Package Distribution Chart (Doughnut)
         var ctxPie = document.getElementById("packageChart");
         var packageChart = new Chart(ctxPie, {
             type: 'doughnut',
@@ -339,19 +352,28 @@
                 labels: @Html.Raw(Json.Serialize(Model.PackageDistribution.Keys)),
                 datasets: [{
                     data: @Html.Raw(Json.Serialize(Model.PackageDistribution.Values)),
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617'],
-                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                    backgroundColor: ['#6366f1', '#10b981', '#0ea5e9', '#f59e0b', '#ef4444'],
+                    hoverBackgroundColor: ['#4f46e5', '#059669', '#0284c7', '#d97706', '#dc2626'],
+                    hoverBorderColor: "#ffffff",
+                    borderWidth: 4,
+                    hoverOffset: 4
                 }],
             },
             options: {
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
+                    legend: { display: false },
+                    tooltip: {
+                         backgroundColor: '#1e293b',
+                         padding: 12,
+                         cornerRadius: 8,
+                    }
                 },
-                cutout: '80%',
+                cutout: '75%',
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
             },
         });
     </script>
