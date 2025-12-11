@@ -21,7 +21,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--bg-color);
     margin: 0;
-    overflow-x: hidden;
+    overflow: hidden;
     color: #5a5c69;
 }
 
@@ -34,15 +34,16 @@ body {
     display: flex;
     width: 100%;
     align-items: stretch;
-    min-height: 100vh;
-    /* Force full viewport height */
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* Sidebar */
 #sidebar-wrapper {
     min-width: var(--sidebar-width);
     max-width: var(--sidebar-width);
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
     /* Force full height */
     background-color: #4e73df;
     background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
@@ -93,6 +94,8 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 /* Navbar */
@@ -128,6 +131,16 @@ body {
 
 .card-custom:hover {
     transform: translateY(-5px);
+}
+
+.transform-hover {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.transform-hover:hover {
+    transform: translateY(-5px);
+    text-decoration: none;
 }
 
 .card-header-custom {

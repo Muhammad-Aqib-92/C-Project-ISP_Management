@@ -24,6 +24,8 @@ namespace Semester_Project.Models
         public string Description { get; set; }
 
         public TicketStatus Status { get; set; } = TicketStatus.Open;
+        
+        public string? Remarks { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
@@ -33,6 +35,6 @@ namespace Semester_Project.Models
         public int? UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public ISP_user User { get; set; }
+        public ISP_user? User { get; set; }
     }
 }

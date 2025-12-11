@@ -8,22 +8,25 @@
 
 <div class="row">
     <!-- Earnings (Monthly) Card Example -->
+    <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-custom border-left-primary h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Total Customers
+        <a asp-controller="ISP" asp-action="Index" class="text-decoration-none">
+            <div class="card card-custom border-left-primary shadow h-100 py-2 transform-hover">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Customers
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalCustomers</div>
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalCustomers</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- Earnings (Monthly) Card Example -->
@@ -45,22 +48,46 @@
     </div>
 
     <!-- Warnings Card Example -->
+    <!-- Warnings Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-custom border-left-warning h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Unpaid Customers
+        <a asp-controller="ISP" asp-action="Index" asp-route-status="unpaid" class="text-decoration-none">
+            <div class="card card-custom border-left-danger shadow h-100 py-2 transform-hover">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Unpaid Customers
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.UnpaidCustomers</div>
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.UnpaidCustomers</div>
-                    </div>
-                     <div class="col-auto">
-                        <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                         <div class="col-auto">
+                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
+    </div>
+
+    <!-- Paid Customer Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <a asp-controller="ISP" asp-action="Index" asp-route-status="paid" class="text-decoration-none">
+            <div class="card card-custom border-left-success shadow h-100 py-2 transform-hover">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Paid Customers
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.PaidCustomers</div>
+                        </div>
+                         <div class="col-auto">
+                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
     </div>
 
     @if (User.IsInRole("SuperAdmin"))
@@ -117,21 +144,23 @@
     
     <!-- Open Tickets Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card card-custom border-left-danger h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                            Open Tickets
+        <a asp-controller="Ticket" asp-action="Index" class="text-decoration-none">
+            <div class="card card-custom border-left-danger shadow h-100 py-2 transform-hover">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Open Tickets
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.OpenTickets</div>
                         </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.OpenTickets</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-ticket-alt fa-2x text-gray-300"></i>
+                        <div class="col-auto">
+                            <i class="fas fa-ticket-alt fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 
@@ -143,9 +172,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Revenue Overview</h6>
-                <a asp-action="FixRoles" class="btn btn-sm btn-info shadow-sm" title="Ensure all users have roles">
-                    <i class="fas fa-tools fa-sm text-white-50"></i> Fix Roles
-                </a>
+
             </div>
             <div class="card-body">
                 <div class="chart-area" style="height: 320px;">

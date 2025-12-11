@@ -138,14 +138,15 @@ namespace Semester_Project.Controllers
         // POST: Resolve Ticket (Admin only)
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public IActionResult MarkResolved(int id)
+        public IActionResult MarkResolved(int id, string remarks)
         {
             var ticket = _context.SupportTickets.Find(id);
             if (ticket != null)
             {
                 ticket.Status = TicketStatus.Resolved;
+                ticket.Remarks = remarks; // Save remarks
                 _context.SaveChanges();
-                TempData["SuccessMessage"] = "Ticket marked as Resolved.";
+                TempData["SuccessMessage"] = "Ticket marked as Resolved with remarks.";
             }
             return RedirectToAction(nameof(Index));
         }

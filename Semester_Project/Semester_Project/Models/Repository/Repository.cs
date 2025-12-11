@@ -75,7 +75,7 @@ namespace Semester_Project6.Models.Repository
             }
         }
 
-        public List<ISP_user> Get(string searchString)
+        public List<ISP_user> Get(string? searchString, string? status = "")
         {
              var query = dbContext.ISP_Users.Include(u => u.InternetPackage).AsQueryable();
 
@@ -84,6 +84,18 @@ namespace Semester_Project6.Models.Repository
                 searchString = searchString.ToLower();
                 query = query.Where(u => u.Name.ToLower().Contains(searchString) || 
                                          u.Email.ToLower().Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                if (status.ToLower() == "paid")
+                {
+                    query = query.Where(u => u.IsPaid == true);
+                }
+                else if (status.ToLower() == "unpaid")
+                {
+                    query = query.Where(u => u.IsPaid != true); // Handle null or false
+                }
             }
 
             return query.ToList();

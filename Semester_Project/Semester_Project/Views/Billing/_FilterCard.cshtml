@@ -1,0 +1,79 @@
+@model List<Semester_Project.Models.ISP_user>
+
+<div class="card shadow-sm border-0 mb-4 filter-card" style="background: #fff; transition: all 0.3s ease;">
+    <div class="card-header bg-transparent border-0 pt-4 pb-2 ps-4">
+        <h6 class="font-weight-bold text-primary mb-0" style="letter-spacing: 0.5px;">
+            <i class="fas fa-filter me-2"></i>Filter Options
+        </h6>
+    </div>
+    <div class="card-body ps-4 pe-4 pb-4">
+        <form method="get" asp-action="Index" class="row g-3 align-items-end">
+            <!-- Month Selection -->
+            <div class="col-md-4">
+               <label class="form-label text-muted small text-uppercase fw-bold mb-2">Month</label>
+               <div class="input-group input-group-hover">
+                    <span class="input-group-text bg-light border-end-0 text-primary"><i class="fas fa-calendar-alt"></i></span>
+                    <select name="month" class="form-select border-start-0 ps-2" style="cursor: pointer;">
+                        <option value="">View All Months</option>
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            <option value="@i" selected="@(ViewBag.FilterMonth == i)">@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Year Selection -->
+            <div class="col-md-4">
+                <label class="form-label text-muted small text-uppercase fw-bold mb-2">Year</label>
+                <div class="input-group input-group-hover">
+                     <span class="input-group-text bg-light border-end-0 text-primary"><i class="fas fa-clock"></i></span>
+                    <select name="year" class="form-select border-start-0 ps-2" style="cursor: pointer;">
+                        <option value="">View All Years</option>
+                        @for (int i = DateTime.Now.Year; i >= 2023; i--)
+                        {
+                            <option value="@i" selected="@(ViewBag.FilterYear == i)">@i</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary shadow-sm px-4 flex-grow-1" style="transition: transform 0.2s;">
+                    <i class="fas fa-check me-2"></i>Apply Filter
+                </button>
+                @if (ViewBag.FilterMonth != null || ViewBag.FilterYear != null)
+                {
+                    <a asp-action="Index" class="btn btn-light text-danger border shadow-sm px-3 flex-grow-1" style="transition: transform 0.2s;">
+                        <i class="fas fa-times me-2"></i>Clear
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .filter-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.08) !important;
+    }
+    .input-group-hover .input-group-text, 
+    .input-group-hover .form-select {
+        transition: all 0.2s;
+        border-color: #e3e6f0;
+    }
+    .input-group-hover:hover .input-group-text,
+    .input-group-hover:hover .form-select {
+        border-color: #4e73df;
+        background-color: #f8f9fc;
+    }
+    .form-select:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.15);
+    }
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+</style>

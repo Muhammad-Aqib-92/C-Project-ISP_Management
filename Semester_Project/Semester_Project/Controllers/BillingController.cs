@@ -24,7 +24,10 @@ namespace Semester_Project6.Controllers
         // Billing Page
         public IActionResult Index(int? month, int? year)
         {
+            EnsurePaymentDataConsistent(); // Run check automatically
+
             List<ISP_user> data = repo.Get();
+
 
             if (month.HasValue && year.HasValue)
             {
@@ -118,5 +121,50 @@ namespace Semester_Project6.Controllers
             var pdfBytes = _invoiceService.GenerateInvoice(user, payment);
             return File(pdfBytes, "application/pdf", $"Invoice_{payment.InvoiceNumber}.pdf");
         }
-    }
+
+
+        private void EnsurePaymentDataConsistent()
+        {
+            try
+            {
+                var paidUsers = repo.Get().Where(u => u.IsPaid == true).ToList();
+                int fixedCount = 0;
+                int updatedCount = 0;
+
+                foreach (var user in paidUsers)
+                {
+                    var history = _context.PaymentHistories.FirstOrDefault(p => p.UserId == user.Id);
+                    
+                    if (history == null)
+                    {
+                        var payment = new PaymentHistory
+                        {
+                            UserId = user.Id,
+                            Amount = user.Price > 0 ? user.Price : (user.InternetPackage?.Price ?? 0),
+                            PaymentDate = System.DateTime.Now,
+                            InvoiceNumber = $"INV-{System.DateTime.Now:yyyyMMdd}-{user.Id}-FIX"
+                        };
+                        _context.PaymentHistories.Add(payment);
+                        fixedCount++;
+                    }
+                    else if (history.Amount == 0 && user.Price > 0)
+                    {
+                        history.Amount = user.Price;
+                        history.PaymentDate = System.DateTime.Now; 
+                        _context.PaymentHistories.Update(history);
+                        updatedCount++;
+                    }
+                }
+
+                if (fixedCount > 0 || updatedCount > 0)
+                {
+                    _context.SaveChanges();
+                }
+            }
+            catch (System.Exception) 
+            {
+                // fail silently
+            }
+        }
+}
 }

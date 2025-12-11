@@ -3,6 +3,7 @@
     public class DashboardViewModel
     {
         public int TotalCustomers { get; set; }
+        public int PaidCustomers { get; set; } // New Property
         public decimal TotalRevenue { get; set; }
         public int UnpaidCustomers { get; set; }
         public decimal Profit { get; set; }

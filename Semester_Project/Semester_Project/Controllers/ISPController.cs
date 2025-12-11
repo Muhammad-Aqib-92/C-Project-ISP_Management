@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Semester_Project.Models;
 using Semester_Project6.Models.Interface;
 using System.Collections.Generic;
+using System;
 
 namespace Semester_Project6.Controllers
 {
@@ -23,10 +24,12 @@ namespace Semester_Project6.Controllers
         }
 
         // GET: ISP
-        public IActionResult Index(string searchString)
+        // GET: ISP
+        public IActionResult Index(string? searchString, string? status)
         {
             ViewData["CurrentFilter"] = searchString;
-            List<ISP_user> Data = repo.Get(searchString);
+            ViewData["CurrentStatus"] = status; // Keep track of filter
+            List<ISP_user> Data = repo.Get(searchString, status);
             return View("Customers", Data);
         }
 
@@ -303,10 +306,45 @@ namespace Semester_Project6.Controllers
         }
 
         // Dashboard
-        public IActionResult Dashboard()
+        public async System.Threading.Tasks.Task<IActionResult> Dashboard()
         {
+            await EnsureRolesConsistent();
             var viewModel = _dashboardService.GetDashboardViewModel();
             return View(viewModel);
+        }
+
+        private async System.Threading.Tasks.Task EnsureRolesConsistent()
+        {
+             var allProfiles = repo.Get();
+            foreach (var profile in allProfiles)
+            {
+                if (!string.IsNullOrEmpty(profile.IdentityUserId))
+                {
+                    var user = await _userManager.FindByIdAsync(profile.IdentityUserId);
+                    if (user != null)
+                    {
+                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "User");
+                        }
+                    }
+                }
+                else if (!string.IsNullOrEmpty(profile.Email))
+                {
+                     var user = await _userManager.FindByEmailAsync(profile.Email);
+                     if (user != null)
+                    {
+                        // Link if missing
+                        profile.IdentityUserId = user.Id;
+                        repo.UpdateUser(profile);
+
+                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "User");
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -347,98 +385,6 @@ namespace Semester_Project6.Controllers
             }
             return RedirectToAction("Index");
         }
-        // GET: Fix Roles (Utility)
-        [HttpGet]
-        public async System.Threading.Tasks.Task<IActionResult> FixRoles()
-        {
-            var allProfiles = repo.Get();
-            int fixedCount = 0;
 
-            foreach (var profile in allProfiles)
-            {
-                if (!string.IsNullOrEmpty(profile.IdentityUserId))
-                {
-                    var user = await _userManager.FindByIdAsync(profile.IdentityUserId);
-                    if (user != null)
-                    {
-                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
-                        {
-                            await _userManager.AddToRoleAsync(user, "User");
-                            fixedCount++;
-                        }
-                    }
-                }
-                else if (!string.IsNullOrEmpty(profile.Email))
-                {
-                     var user = await _userManager.FindByEmailAsync(profile.Email);
-                     if (user != null)
-                    {
-                        // Link if missing
-                        profile.IdentityUserId = user.Id;
-                        repo.UpdateUser(profile);
-
-                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
-                        {
-                            await _userManager.AddToRoleAsync(user, "User");
-                            fixedCount++;
-                        }
-                    }
-                }
-            }
-
-            TempData["SuccessMessage"] = $"Role check complete. Fixed {fixedCount} users.";
-            return RedirectToAction("Index");
-        }
-        // GET: Fix Payment Data (Utility)
-        [HttpGet]
-        public IActionResult FixPaymentData()
-        {
-            var paidUsers = repo.Get().Where(u => u.IsPaid == true).ToList();
-            int fixedCount = 0;
-            int updatedCount = 0;
-
-            foreach (var user in paidUsers)
-            {
-                // Check if they have ANY payment history
-                var history = _context.PaymentHistories.FirstOrDefault(p => p.UserId == user.Id);
-                
-                if (history == null)
-                {
-                    // Case 1: Missing History - Create it
-                    var payment = new PaymentHistory
-                    {
-                        UserId = user.Id,
-                        Amount = user.Price > 0 ? user.Price : (user.InternetPackage?.Price ?? 0),
-                        PaymentDate = DateTime.Now,
-                        InvoiceNumber = $"INV-{DateTime.Now:yyyyMMdd}-{user.Id}-FIX"
-                    };
-                    _context.PaymentHistories.Add(payment);
-                    fixedCount++;
-                }
-                else if (history.Amount == 0 && user.Price > 0)
-                {
-                    // Case 2: Bad History (0 Amount) - Fix it
-                    history.Amount = user.Price;
-                    history.PaymentDate = DateTime.Now; // Update date to ensure it shows in recent graph? Optional.
-                    // Let's keep date but fix amount. 
-                    // Actually, if date is old, it might not show in graph. Let's touch the date too to be sure it appears in THIS month.
-                    history.PaymentDate = DateTime.Now; 
-                    _context.PaymentHistories.Update(history);
-                    updatedCount++;
-                }
-            }
-
-            if (fixedCount > 0 || updatedCount > 0)
-            {
-                _context.SaveChanges();
-                TempData["SuccessMessage"] = $"Fixed: Created {fixedCount} records, Updated {updatedCount} zero-amount records.";
-            }
-            else
-            {
-                TempData["SuccessMessage"] = "No missing or zero-amount payment data found.";
-            }
-
-            return RedirectToAction("Index", "Billing");
-        }
     }
 }
