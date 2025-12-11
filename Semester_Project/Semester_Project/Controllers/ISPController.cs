@@ -6,20 +6,23 @@ using System.Collections.Generic;
 
 namespace Semester_Project6.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ISPController : Controller
     {
         private readonly ISPuserinterface repo;
         private readonly Semester_Project.Services.DashboardService _dashboardService;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<myappuser> _userManager;
+        private readonly Semester_Project.Data.ApplicationDbContext _context;
 
-        public ISPController(ISPuserinterface repo, Semester_Project.Services.DashboardService dashboardService)
+        public ISPController(ISPuserinterface repo, Semester_Project.Services.DashboardService dashboardService, Microsoft.AspNetCore.Identity.UserManager<myappuser> userManager, Semester_Project.Data.ApplicationDbContext context)
         {
             this.repo = repo;
             _dashboardService = dashboardService;
+            _userManager = userManager;
+            _context = context;
         }
 
         // GET: ISP
-        [Authorize(Policy = "RequireTechAccess")]
         public IActionResult Index(string searchString)
         {
             ViewData["CurrentFilter"] = searchString;
@@ -50,6 +53,7 @@ namespace Semester_Project6.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Packages = repo.GetPackages();
             return View(user);
         }
 
@@ -57,18 +61,79 @@ namespace Semester_Project6.Controllers
         [HttpPost]
         public IActionResult EditCustomer(ISP_user updatedUser)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
+                // Update Price Logic based on Package
+                if (updatedUser.InternetPackageId != null)
+                {
+                    var selectedPackage = repo.GetPackageById(updatedUser.InternetPackageId.Value);
+                    if (selectedPackage != null)
+                    {
+                        updatedUser.Price = selectedPackage.Price;
+                    }
+                }
+
+                // Check previous payment status
+                bool wasUnpaid = false;
+                var oldUser = repo.GetUserById(updatedUser.Id);
+                // Note: repo.GetUserById returning the tracked entity might complicate things if we are not careful,
+                // but since repo.UpdateUser handles its own retrieval and update properties, we just need to know the state.
+                // However, since we are in the same scope, repo.GetUserById likely attaches the entity. 
+                // Let's detach it or just check the boolean before UpdateUser overwrites values?
+                // Actually repo.UpdateUser implementation fetches the user again. EF Core might track the same instance.
+                // If 'oldUser' IS the internal tracked entity, and 'updatedUser' is the separate model binder object...
+                // Inspection: repo.GetUserById does `dbContext.ISP_Users.FirstOrDefault(u => u.Id == id)`.
+                // It returns a tracked entity.
+                
+                if (oldUser != null)
+                {
+                    if (oldUser.IsPaid != true) // was false or null
+                    {
+                        wasUnpaid = true;
+                    }
+                    // Detach to avoid conflict in Repo? 
+                    // Repo.UpdateUser does: var existingUser = dbContext.ISP_Users.FirstOrDefault...
+                    // If we already loaded it here, Repo will get the SAME instance.
+                    // Repo then overwrites properties from 'updatedUser'.
+                    // This is fine.
+                }
+
                 bool isUpdated = repo.UpdateUser(updatedUser);
+                
                 if (isUpdated)
                 {
+                    // Payment History Logic
+                    if (wasUnpaid && updatedUser.IsPaid == true)
+                    {
+                         try
+                         {
+                            var payment = new PaymentHistory
+                            {
+                                UserId = updatedUser.Id,
+                                Amount = updatedUser.Price,
+                                PaymentDate = System.DateTime.Now,
+                                InvoiceNumber = $"INV-{System.DateTime.Now:yyyyMMdd}-{updatedUser.Id}-MN" // MN for Manual
+                            };
+                            _context.PaymentHistories.Add(payment);
+                            _context.SaveChanges();
+                         }
+                         catch (System.Exception ex)
+                         {
+                             // Log error but don't stop the flow
+                             System.Console.WriteLine($"Error recording manual payment: {ex.Message}");
+                         }
+                    }
+
+                    TempData["SuccessMessage"] = "Customer details updated successfully!";
                     return RedirectToAction("Index");
                 }
                 else
                 {
+                    ViewBag.Packages = repo.GetPackages();
                     return View(updatedUser);
                 }
             }
+            ViewBag.Packages = repo.GetPackages();
             return View(updatedUser);
         }
 
@@ -85,13 +150,40 @@ namespace Semester_Project6.Controllers
         }
 
         // POST: Confirm delete
+        // POST: Confirm delete
+        // POST: Confirm delete
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public async System.Threading.Tasks.Task<IActionResult> DeleteConfirmed(int id)
         {
-            bool isDeleted = repo.DeleteUser(id);
-            if (isDeleted)
+            var userProfile = repo.GetUserById(id);
+            if (userProfile != null)
             {
-                return RedirectToAction("Index");
+                // Find Identity User
+                myappuser identityUser = null;
+                
+                // 1. Try by IdentityUserId (New Standard)
+                if (!string.IsNullOrEmpty(userProfile.IdentityUserId))
+                {
+                    identityUser = await _userManager.FindByIdAsync(userProfile.IdentityUserId);
+                }
+
+                // 2. Fallback to Email (Legacy Users)
+                if (identityUser == null && !string.IsNullOrEmpty(userProfile.Email))
+                {
+                    identityUser = await _userManager.FindByEmailAsync(userProfile.Email);
+                }
+
+                if (identityUser != null)
+                {
+                    await _userManager.DeleteAsync(identityUser);
+                }
+
+                bool isDeleted = repo.DeleteUser(id);
+                if (isDeleted)
+                {
+                    TempData["SuccessMessage"] = "Customer deleted successfully.";
+                    return RedirectToAction("Index");
+                }
             }
             return NotFound();
         }
@@ -105,25 +197,83 @@ namespace Semester_Project6.Controllers
         }
 
         // POST: Add User - add user with selected package price
+        // POST: Add User - add user with selected package price
+        // POST: Add User - add user with selected package price
         [HttpPost]
-        public IActionResult AddUser(ISP_user user)
+        public async System.Threading.Tasks.Task<IActionResult> AddUser(Semester_Project.ViewModels.UserProvisioningViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (user.InternetPackageId != null)
+                // 1. Create Identity User
+                var identityUser = new myappuser
                 {
-                    var selectedPackage = repo.GetPackageById(user.InternetPackageId.Value);
-                    if (selectedPackage != null)
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = true,
+                    city = model.Address ?? "Unknown", 
+                    state = "NA"
+                };
+
+                var result = await _userManager.CreateAsync(identityUser, model.Password);
+
+                if (result.Succeeded)
+                {
+                    var roleResult = await _userManager.AddToRoleAsync(identityUser, "User");
+                    if (!roleResult.Succeeded)
                     {
-                        user.Price = selectedPackage.Price;
+                        await _userManager.DeleteAsync(identityUser); // Cleanup
+                        ModelState.AddModelError("", "Failed to assign user role.");
+                         return View(model);
+                    }
+
+                    try 
+                    {
+                        // 2. Create Profile Data
+                         var newUserProfile = new ISP_user
+                        {
+                            Name = model.Name,
+                            Email = model.Email,
+                            Phone = model.Phone,
+                            Address = model.Address,
+                            InternetPackageId = model.InternetPackageId,
+                            IdentityUserId = identityUser.Id, // Link!
+                            IsActive = true
+                        };
+
+                        if (model.InternetPackageId != null)
+                        {
+                            var selectedPackage = repo.GetPackageById(model.InternetPackageId.Value);
+                            if (selectedPackage != null)
+                            {
+                                newUserProfile.Price = selectedPackage.Price;
+                            }
+                        }
+                        
+                        repo.Add(newUserProfile);
+                        TempData["SuccessMessage"] = "Customer created successfully and assigned 'User' role!";
+                        return RedirectToAction("Index");
+                    }
+                    catch (System.Exception ex)
+                    {
+                        // Rollback: Delete the created Identity User if profile creation fails
+                        await _userManager.DeleteAsync(identityUser);
+                        System.Console.WriteLine($"Transaction Failed: {ex.Message}");
+                        if (ex.InnerException != null) System.Console.WriteLine($"Inner: {ex.InnerException.Message}");
+                        
+                        ModelState.AddModelError("", $"Failed to create profile: {ex.Message}");
                     }
                 }
-                repo.Add(user);
-                return RedirectToAction("Index");
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
             }
 
             ViewBag.Packages = repo.GetPackages();
-            return View(user);
+            return View(model);
         }
 
         // Login Page
@@ -144,7 +294,6 @@ namespace Semester_Project6.Controllers
         }
 
         // Dashboard
-        [Authorize] // Accessible to all authenticated users, view filters content
         public IActionResult Dashboard()
         {
             var viewModel = _dashboardService.GetDashboardViewModel();
@@ -159,10 +308,77 @@ namespace Semester_Project6.Controllers
 
 
 
-        //// Reports Page
-        //public IActionResult Reports()
-        //{
-        //    return View();
-        //}
+        // GET: Reset Password
+        [HttpGet]
+        public IActionResult ResetPassword(int id)
+        {
+            var user = repo.GetUserById(id);
+            if (user == null) return NotFound();
+            return View(user);
+        }
+
+        // POST: Reset Password
+        [HttpPost]
+        public async System.Threading.Tasks.Task<IActionResult> ResetPasswordConfirmed(int id)
+        {
+            var userProfile = repo.GetUserById(id);
+            if (userProfile != null)
+            {
+                var identityUser = await _userManager.FindByEmailAsync(userProfile.Email);
+                if (identityUser != null)
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(identityUser);
+                    var result = await _userManager.ResetPasswordAsync(identityUser, token, "User@123");
+                    if (result.Succeeded)
+                    {
+                         TempData["SuccessMessage"] = $"Password for {userProfile.Name} has been reset to 'User@123'.";
+                         return RedirectToAction("Index");
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        // GET: Fix Roles (Utility)
+        [HttpGet]
+        public async System.Threading.Tasks.Task<IActionResult> FixRoles()
+        {
+            var allProfiles = repo.Get();
+            int fixedCount = 0;
+
+            foreach (var profile in allProfiles)
+            {
+                if (!string.IsNullOrEmpty(profile.IdentityUserId))
+                {
+                    var user = await _userManager.FindByIdAsync(profile.IdentityUserId);
+                    if (user != null)
+                    {
+                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "User");
+                            fixedCount++;
+                        }
+                    }
+                }
+                else if (!string.IsNullOrEmpty(profile.Email))
+                {
+                     var user = await _userManager.FindByEmailAsync(profile.Email);
+                     if (user != null)
+                    {
+                        // Link if missing
+                        profile.IdentityUserId = user.Id;
+                        repo.UpdateUser(profile);
+
+                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            await _userManager.AddToRoleAsync(user, "User");
+                            fixedCount++;
+                        }
+                    }
+                }
+            }
+
+            TempData["SuccessMessage"] = $"Role check complete. Fixed {fixedCount} users.";
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -42,7 +42,10 @@
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Package</th>
-                        <th>Price</th>
+                        @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
+                        {
+                            <th>Price</th>
+                        }
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -58,12 +61,18 @@
                             <td class="text-center">
                                 @(customer.InternetPackage?.Speed.ToString() ?? "0") Mbps
                             </td>
-                            <td>
-                                @(customer.Price.ToString("C"))
-                            </td>
+                            @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
+                            {
+                                <td>
+                                    @(customer.Price.ToString("C"))
+                                </td>
+                            }
                             <td>
                                 <a href="@Url.Action("EditCustomer", "ISP", new { id = customer.Id })" class="btn btn-warning btn-sm btn-circle" title="Edit">
                                     <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="@Url.Action("ResetPassword", "ISP", new { id = customer.Id })" class="btn btn-secondary btn-sm btn-circle" title="Reset Password">
+                                    <i class="fas fa-key"></i>
                                 </a>
                                 <a href="@Url.Action("Delete", "ISP", new { id = customer.Id })" class="btn btn-danger btn-sm btn-circle" title="Delete">
                                     <i class="fas fa-trash"></i>

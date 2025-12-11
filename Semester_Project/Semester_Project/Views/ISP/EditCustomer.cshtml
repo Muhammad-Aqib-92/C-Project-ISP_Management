@@ -45,6 +45,16 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="InternetPackageId" class="form-label">Internet Package</label>
+                            <select asp-for="InternetPackageId" class="form-select form-control" asp-items="@(new SelectList(ViewBag.Packages as List<Semester_Project.Models.InternetPackage>, "Id", "PackageName"))">
+                                <option value="">-- Select Package --</option>
+                            </select>
+                            <span asp-validation-for="InternetPackageId" class="text-danger"></span>
+                        </div>
+                    </div>
+
                     <hr class="my-4" />
 
                     <div class="d-flex justify-content-end">

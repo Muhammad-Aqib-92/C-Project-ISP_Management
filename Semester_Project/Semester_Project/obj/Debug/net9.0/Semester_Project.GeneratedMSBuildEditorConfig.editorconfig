@@ -76,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/InternetPackage/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/InternetPackage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW50ZXJuZXRQYWNrYWdlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -120,6 +124,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/ISP/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSVNQXFJlc2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Report/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -142,6 +150,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/Ticket/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlja2V0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/User/MyBill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxNeUJpbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/User/MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxNeVByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Muhammad Aqib/Desktop/ISP/C-Project-ISP_Management/Semester_Project/Semester_Project/Views/_ViewImports.cshtml]

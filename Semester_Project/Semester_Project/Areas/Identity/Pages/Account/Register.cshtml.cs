@@ -108,11 +108,7 @@ namespace Semester_Project.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var claims = new List<Claim>
-                    {
-                        new Claim("Role", "user"),
-                    };
-                    await _userManager.AddClaimsAsync(user, claims);
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

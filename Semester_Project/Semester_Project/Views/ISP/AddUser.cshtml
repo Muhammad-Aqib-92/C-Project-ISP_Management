@@ -1,4 +1,4 @@
-﻿@model Semester_Project.Models.ISP_user
+﻿@model Semester_Project.ViewModels.UserProvisioningViewModel
 
 @{
     ViewData["Title"] = "Add Customer";
@@ -12,58 +12,83 @@
     <div class="col-xl-8 col-lg-10">
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Add New Customer</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Add New Customer & Account</h6>
             </div>
             <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                 <form method="post" asp-controller="ISP" asp-action="AddUser">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="Name" class="form-label">Name</label>
-                            <input type="text" id="Name" name="Name" required class="form-control" placeholder="Enter full name" />
+                    
+                    <!-- Login Credentials Section -->
+                    <h6 class="heading-small text-muted mb-4">Login information</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" placeholder="Login Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="Email" class="form-label">Email</label>
-                            <input type="email" id="Email" name="Email" required class="form-control" placeholder="Enter email address" />
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Password" class="form-label"></label>
+                                <input asp-for="Password" class="form-control" placeholder="Password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ConfirmPassword" class="form-label"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                         <div class="col-md-6 mb-3">
-                            <label for="Phone" class="form-label">Phone</label>
-                            <input type="text" id="Phone" name="Phone" required class="form-control" placeholder="Enter phone number" />
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="InternetPackageId" class="form-label">Internet Package</label>
-                            <select id="InternetPackageId" name="InternetPackageId" class="form-select form-control" required>
-                                <option value="">-- Select Package --</option>
-                                @foreach (var pkg in ViewBag.Packages as List<Semester_Project.Models.InternetPackage>)
-                                {
-                                    <option value="@pkg.Id">@pkg.PackageName (@pkg.Speed Mbps) - Rs. @pkg.Price</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="Address" class="form-label">Address</label>
-                        <input type="text" id="Address" name="Address" required class="form-control" placeholder="Enter full address" />
                     </div>
 
                     <hr class="my-4" />
 
-                    <div class="d-flex justify-content-end">
-                        <a href="@Url.Action("Customers", "ISP")" class="btn btn-secondary me-2">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Add Customer</button>
+                    <!-- User Profile Section -->
+                    <h6 class="heading-small text-muted mb-4">User Profile</h6>
+                    <div class="pl-lg-4">
+                         <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Name" class="form-label"></label>
+                                <input asp-for="Name" class="form-control" placeholder="Full Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Phone" class="form-label"></label>
+                                <input asp-for="Phone" class="form-control" placeholder="Phone Number" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="Address" class="form-label"></label>
+                                <input asp-for="Address" class="form-control" placeholder="Home Address" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                         <div class="row">
+                             <div class="col-md-6 mb-3">
+                                <label asp-for="InternetPackageId" class="form-label"></label>
+                                <select asp-for="InternetPackageId" class="form-select form-control" asp-items="@(new SelectList(ViewBag.Packages as List<Semester_Project.Models.InternetPackage>, "Id", "PackageName"))">
+                                    <option value="">-- Select Package --</option>
+                                </select>
+                                <span asp-validation-for="InternetPackageId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="@Url.Action("Index", "ISP")" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
                     </div>
                 </form>
-
-                @if (ViewBag.Message != null)
-                {
-                    <div class="alert alert-info mt-3" role="alert">
-                        @ViewBag.Message
-                    </div>
-                }
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

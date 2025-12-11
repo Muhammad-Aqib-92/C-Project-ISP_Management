@@ -8,49 +8,136 @@ using System.Linq;
 
 namespace Semester_Project.Controllers
 {
-    [Authorize]
+    [Authorize] // Allow both Admin and User
     public class TicketController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ISPuserinterface _repo;
 
-        public TicketController(ApplicationDbContext context, ISPuserinterface repo)
+        private readonly Microsoft.AspNetCore.Identity.UserManager<myappuser> _userManager;
+
+        public TicketController(ApplicationDbContext context, ISPuserinterface repo, Microsoft.AspNetCore.Identity.UserManager<myappuser> userManager)
         {
             _context = context;
             _repo = repo;
+            _userManager = userManager;
         }
 
-        // GET: Ticket List (Admin sees all, User sees theirs - logic can be improved later)
-        public IActionResult Index()
+        // GET: Ticket List
+        public async System.Threading.Tasks.Task<IActionResult> Index()
         {
-            var tickets = _context.SupportTickets.Include(t => t.User).OrderByDescending(t => t.CreatedDate).ToList();
-            return View(tickets);
+             var user = await _userManager.GetUserAsync(User);
+             var tickets = _context.SupportTickets.Include(t => t.User).AsQueryable();
+
+             if (!User.IsInRole("Admin"))
+             {
+                 // Filter for current user's email if not Admin
+                  // Assuming SupportTicket links to ISP_user via UserId (int) but we have Identity User here. 
+                  // We need to find the ISP_user ID based on Identity User Email.
+                  // Filter for current user's profile
+                  var allProfiles = _repo.Get();
+                  // Try finding by Identity ID first
+                  var userProfile = allProfiles.FirstOrDefault(u => u.IdentityUserId == user.Id);
+                  
+                  // Fallback to Email if legacy or not linked
+                  if (userProfile == null)
+                  {
+                      userProfile = allProfiles.FirstOrDefault(u => u.Email == user.Email);
+                  }
+
+                  if (userProfile != null)
+                  {
+                      tickets = tickets.Where(t => t.UserId == userProfile.Id);
+                  }
+                  else
+                  {
+                      tickets = tickets.Where(t => t.UserId == -1); // Show nothing if profile not found
+                  }
+             }
+
+            return View(tickets.OrderByDescending(t => t.CreatedDate).ToList());
         }
 
         // GET: Create Ticket
         public IActionResult Create()
         {
-            ViewBag.Users = _repo.Get();
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Users = _repo.Get();
+            }
             return View();
         }
 
         // POST: Create Ticket
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(SupportTicket ticket)
+        public async System.Threading.Tasks.Task<IActionResult> Create(SupportTicket ticket)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            
+             if (!User.IsInRole("Admin"))
+            {
+                // Force assign current user
+                // CAUTION: Ensure we find the profile!
+                // Force assign current user
+                var allProfiles = _repo.Get();
+                var userProfile = allProfiles.FirstOrDefault(u => u.IdentityUserId == currentUser.Id);
+                
+                if (userProfile == null)
+                {
+                    userProfile = allProfiles.FirstOrDefault(u => u.Email == currentUser.Email);
+                }
+
+                if (userProfile != null)
+                {
+                    ticket.UserId = userProfile.Id;
+                    // Clear validation error for UserId since we just set it manually
+                    ModelState.Remove("UserId"); 
+                    ModelState.Remove("User"); // Fix: Navigation property validation error
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Could not find your Customer Profile. Please contact Admin.");
+                }
+            }
+            else 
+            {
+                 // Admin creating for someone else
+                 if(ticket.UserId == null)
+                 {
+                      ModelState.AddModelError("UserId", "Please select a user.");
+                 }
+            }
+
             if (ModelState.IsValid)
             {
+                ticket.Status = TicketStatus.Open; 
+                ticket.CreatedDate = System.DateTime.Now;
                 _context.SupportTickets.Add(ticket);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Ticket created successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Users = _repo.Get();
+            
+            // Debugging: Log errors to Console
+            foreach (var state in ModelState)
+            {
+                foreach (var error in state.Value.Errors)
+                {
+                    System.Console.WriteLine($"Error in {state.Key}: {error.ErrorMessage}");
+                }
+            }
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.Users = _repo.Get();
+            }
             return View(ticket);
         }
 
         // POST: Resolve Ticket (Admin only)
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult MarkResolved(int id)
         {
             var ticket = _context.SupportTickets.Find(id);
@@ -58,10 +145,12 @@ namespace Semester_Project.Controllers
             {
                 ticket.Status = TicketStatus.Resolved;
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "Ticket marked as Resolved.";
             }
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var ticket = _context.SupportTickets.Find(id);
@@ -69,6 +158,7 @@ namespace Semester_Project.Controllers
             {
                 _context.SupportTickets.Remove(ticket);
                 _context.SaveChanges();
+                TempData["SuccessMessage"] = "Ticket deleted.";
             }
             return RedirectToAction(nameof(Index));
         }

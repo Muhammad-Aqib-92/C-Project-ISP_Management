@@ -46,25 +46,28 @@ namespace Semester_Project.Services
                 .Select(g => new { Name = g.Key, Count = g.Count() })
                 .ToDictionary(k => k.Name, v => v.Count);
 
-            // Chart Data Generation (Simulating history as PaymentHistory table is not yet implemented)
+            // Chart Data Generation (Real Data from PaymentHistory)
             var revenueMonths = new List<string>();
             var revenueAmounts = new List<decimal>();
             var today = DateTime.Today;
+            var sixMonthsAgo = today.AddMonths(-5);
+            var startDate = new DateTime(sixMonthsAgo.Year, sixMonthsAgo.Month, 1);
+
+            // Fetch payments for the last 6 months
+            var recentPayments = _context.PaymentHistories
+                .Where(p => p.PaymentDate >= startDate)
+                .ToList();
 
             for (int i = 5; i >= 0; i--)
             {
-                var month = today.AddMonths(-i);
-                revenueMonths.Add(month.ToString("MMM"));
+                var targetDate = today.AddMonths(-i);
+                revenueMonths.Add(targetDate.ToString("MMM"));
                 
-                if (i == 0)
-                {
-                    revenueAmounts.Add(totalRevenue);
-                }
-                else
-                {
-                    // Mock historical data for demonstration
-                    revenueAmounts.Add(totalRevenue * (decimal)(0.8 + (0.02 * i))); 
-                }
+                var monthTotal = recentPayments
+                    .Where(p => p.PaymentDate.Year == targetDate.Year && p.PaymentDate.Month == targetDate.Month)
+                    .Sum(p => p.Amount);
+                
+                revenueAmounts.Add(monthTotal);
             }
 
             return new DashboardViewModel

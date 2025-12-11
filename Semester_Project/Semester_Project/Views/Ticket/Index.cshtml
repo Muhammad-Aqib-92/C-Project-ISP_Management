@@ -23,7 +23,7 @@
                         <th>ID</th>
                         <th>Date</th>
                         <th>Subject</th>
-                        <th>User</th>
+                        @if (User.IsInRole("Admin")) { <th>User</th> }
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -35,7 +35,7 @@
                             <td>#@ticket.Id</td>
                             <td>@ticket.CreatedDate.ToShortDateString()</td>
                             <td>@ticket.Subject</td>
-                            <td>@(ticket.User?.Name ?? "Unknown")</td>
+                            @if (User.IsInRole("Admin")) { <td>@(ticket.User?.Name ?? "Unknown")</td> }
                             <td>
                                 @if (ticket.Status == Semester_Project.Models.TicketStatus.Resolved)
                                 {
@@ -51,18 +51,21 @@
                                 }
                             </td>
                             <td>
-                                @if (ticket.Status != Semester_Project.Models.TicketStatus.Resolved)
+                                @if (User.IsInRole("Admin"))
                                 {
-                                    <form asp-action="MarkResolved" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="@ticket.Id" />
-                                        <button type="submit" class="btn btn-success btn-sm btn-circle" title="Mark Resolved">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    </form>
+                                    if (ticket.Status != Semester_Project.Models.TicketStatus.Resolved)
+                                    {
+                                        <form asp-action="MarkResolved" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@ticket.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm btn-circle" title="Mark Resolved">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                    }
+                                    <a asp-action="Delete" asp-route-id="@ticket.Id" class="btn btn-danger btn-sm btn-circle" onclick="return confirm('Are you sure?');">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
                                 }
-                                <a asp-action="Delete" asp-route-id="@ticket.Id" class="btn btn-danger btn-sm btn-circle" onclick="return confirm('Are you sure?');">
-                                    <i class="fas fa-trash"></i>
-                                </a>
                             </td>
                         </tr>
                     }

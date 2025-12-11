@@ -21,12 +21,14 @@ namespace Semester_Project.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<myappuser> _signInManager;
+        private readonly UserManager<myappuser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<myappuser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<myappuser> signInManager, ILogger<LoginModel> logger, UserManager<myappuser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -116,6 +118,17 @@ namespace Semester_Project.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return LocalRedirect("/ISP/Dashboard");
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "User"))
+                    {
+                        return LocalRedirect("/User/MyProfile");
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

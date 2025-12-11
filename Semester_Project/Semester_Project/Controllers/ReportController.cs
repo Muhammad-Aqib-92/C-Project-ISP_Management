@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Semester_Project6.Controllers
 {
     [Authorize]
-    [Authorize(Policy = "RequireFinancialAccess")]
+    [Authorize(Roles = "Admin")]
     public class ReportController : Controller
     {
         private readonly ISPuserinterface repo;

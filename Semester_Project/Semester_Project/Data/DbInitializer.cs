@@ -11,12 +11,11 @@ namespace Semester_Project.Data
     {
         public static async Task Initialize(IServiceProvider serviceProvider, UserManager<myappuser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            // Ensure the database is created
             var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
             context.Database.EnsureCreated();
 
-            // Seed Roles
-            string[] roles = { "SuperAdmin", "SupportAgent", "FieldTech", "Customer" };
+            // 1. Roles: Admin & User
+            string[] roles = { "Admin", "User" };
 
             foreach (var role in roles)
             {
@@ -26,7 +25,7 @@ namespace Semester_Project.Data
                 }
             }
 
-            // Seed SuperAdmin
+            // 2. Seed Admin User
             var adminEmail = "admin@isp.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
@@ -39,42 +38,49 @@ namespace Semester_Project.Data
                     city = "Headquarters",
                     state = "NA"
                 };
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "SuperAdmin");
+                // Password: Admin@123
+                await userManager.CreateAsync(user, "Admin@123"); 
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+            else
+            {
+                // Ensure existing user has Admin role
+                if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+                {
+                   await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+                // Reset Password to ensure access
+                var token = await userManager.GeneratePasswordResetTokenAsync(adminUser);
+                await userManager.ResetPasswordAsync(adminUser, token, "Admin@123");
             }
 
-            // Seed SupportAgent
-            var supportEmail = "support@isp.com";
-            var supportUser = await userManager.FindByEmailAsync(supportEmail);
-            if (supportUser == null)
+            // 3. Seed Standard User (Customer)
+            var userEmail = "user@isp.com";
+            var standardUser = await userManager.FindByEmailAsync(userEmail);
+            if (standardUser == null)
             {
                 var user = new myappuser
                 {
-                    UserName = supportEmail,
-                    Email = supportEmail,
+                    UserName = userEmail,
+                    Email = userEmail,
                     EmailConfirmed = true,
-                    city = "Call Center",
+                    city = "Residential Area",
                     state = "NA"
                 };
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "SupportAgent");
+                // Password: User@123
+                await userManager.CreateAsync(user, "User@123");
+                await userManager.AddToRoleAsync(user, "User");
             }
-
-            // Seed FieldTech
-            var techEmail = "tech@isp.com";
-            var techUser = await userManager.FindByEmailAsync(techEmail);
-            if (techUser == null)
+            else
             {
-                var user = new myappuser
+                 // Ensure existing user has User role
+                if (!await userManager.IsInRoleAsync(standardUser, "User"))
                 {
-                    UserName = techEmail,
-                    Email = techEmail,
-                    EmailConfirmed = true,
-                    city = "Field Office",
-                    state = "NA"
-                };
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "FieldTech");
+                   await userManager.AddToRoleAsync(standardUser, "User");
+                }
+                 // Reset Password to ensure access
+                var token = await userManager.GeneratePasswordResetTokenAsync(standardUser);
+                await userManager.ResetPasswordAsync(standardUser, token, "User@123");
             }
         }
     }

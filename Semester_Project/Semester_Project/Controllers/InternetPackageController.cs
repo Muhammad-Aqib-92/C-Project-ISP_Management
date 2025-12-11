@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Semester_Project.Models;
 using Semester_Project.Data; // Your DbContext namespace
+using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 
+[Authorize(Roles = "Admin")]
 public class InternetPackageController : Controller
 {
     private readonly ApplicationDbContext dbContext;
@@ -69,11 +71,21 @@ public class InternetPackageController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteConfirmed(int id)
     {
-        var package = dbContext.InternetPackages.Find(id);
-        if (package != null)
+        // Validation: Check if package is in use
+        bool isInUse = dbContext.ISP_Users.Any(u => u.InternetPackageId == id);
+        if (isInUse)
         {
-            dbContext.InternetPackages.Remove(package);
+            var package = dbContext.InternetPackages.Find(id);
+            TempData["ErrorMessage"] = "Cannot delete this package because it is currently assigned to one or more customers.";
+            return View("Delete", package);
+        }
+
+        var packageToDelete = dbContext.InternetPackages.Find(id);
+        if (packageToDelete != null)
+        {
+            dbContext.InternetPackages.Remove(packageToDelete);
             dbContext.SaveChanges();
+            TempData["SuccessMessage"] = "Package deleted successfully.";
         }
         return RedirectToAction("Index");
     }

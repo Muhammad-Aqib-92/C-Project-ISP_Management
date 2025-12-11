@@ -143,6 +143,9 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Revenue Overview</h6>
+                <a asp-action="FixRoles" class="btn btn-sm btn-info shadow-sm" title="Ensure all users have roles">
+                    <i class="fas fa-tools fa-sm text-white-50"></i> Fix Roles
+                </a>
             </div>
             <div class="card-body">
                 <div class="chart-area" style="height: 320px;">
@@ -200,7 +203,9 @@
                     </table>
                 </div>
                 <div class="text-center mt-3">
-                    <a asp-controller="ISP" asp-action="Index" class="btn btn-sm btn-primary">View All Customers</a>
+                    <a asp-controller="ISP" asp-action="Index" class="btn btn-primary shadow-sm">
+                        <i class="fas fa-users fa-sm text-white-50"></i> View All Customers
+                    </a>
                 </div>
             </div>
         </div>

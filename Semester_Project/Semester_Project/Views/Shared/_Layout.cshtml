@@ -18,34 +18,46 @@
             <div class="bg-primary border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading text-white">ISP Manager</div>
                 <div class="list-group list-group-flush">
-                    <a asp-controller="ISP" asp-action="Dashboard" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                    
-                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent") || User.IsInRole("FieldTech"))
+                    @if (User.IsInRole("Admin"))
                     {
+                        <a asp-controller="ISP" asp-action="Dashboard" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
                         <a asp-controller="ISP" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                             <i class="fas fa-users"></i> Customers
                         </a>
-                    }
-                    <a asp-controller="InternetPackage" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-box"></i> Packages
-                    </a>
-                    @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
-                    {
-                         <a asp-controller="Billing" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                        <a asp-controller="InternetPackage" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-box"></i> Packages
+                        </a>
+                        <a asp-controller="Billing" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                             <i class="fas fa-file-invoice-dollar"></i> Billing
                         </a>
-                    }
-                    @if (User.IsInRole("SuperAdmin"))
-                    {
                         <a asp-controller="Report" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>
+                        <a asp-controller="Ticket" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-headset"></i> Support Tickets
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
                     }
-                    <a asp-controller="Ticket" asp-action="Index" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
-                        <i class="fas fa-headset"></i> Support
-                    </a>
+                    
+                    @if (User.IsInRole("User"))
+                    {
+                        <a asp-controller="User" asp-action="MyProfile" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <a asp-controller="User" asp-action="MyBill" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-file-invoice"></i> My Bill
+                        </a>
+                        <a asp-controller="Ticket" asp-action="Create" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-headset"></i> Contact Support
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword" class="list-group-item list-group-item-action text-white-50 hover-text-white bg-transparent">
+                            <i class="fas fa-key"></i> Change Password
+                        </a>
+                    }
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -76,11 +88,22 @@
         <!-- /#page-content-wrapper -->
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
-
+        $(document).ready(function() {
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <text>toastr.success('@TempData["SuccessMessage"]');</text>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>toastr.error('@TempData["ErrorMessage"]');</text>
+            }
+        });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

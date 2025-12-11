@@ -32,14 +32,11 @@ builder.Services.AddScoped<Semester_Project.Services.InvoiceService>();
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("RequireFinancialAccess", policy => 
-        policy.RequireRole("SuperAdmin"));
+    options.AddPolicy("AdminPolicy", policy => 
+        policy.RequireRole("Admin"));
 
-    options.AddPolicy("RequireManagerAccess", policy => 
-        policy.RequireRole("SuperAdmin", "SupportAgent"));
-
-    options.AddPolicy("RequireTechAccess", policy => 
-        policy.RequireRole("SuperAdmin", "SupportAgent", "FieldTech"));
+    options.AddPolicy("UserPolicy", policy => 
+        policy.RequireRole("User"));
 });
 
 
