@@ -22,6 +22,10 @@
              displayName = ispUser.Name;
          }
     }
+    else if (User.IsInRole("Admin") && !string.IsNullOrEmpty(displayName) && displayName.Contains("@"))
+    {
+        displayName = displayName.Split('@')[0];
+    }
 
     <!-- Notifications -->
     <li class="nav-item dropdown no-arrow mx-1">
