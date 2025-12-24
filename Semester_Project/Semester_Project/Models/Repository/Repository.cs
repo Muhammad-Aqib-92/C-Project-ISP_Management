@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Semester_Project.Data;
 using Semester_Project.Models;
-using Semester_Project6.Models.Interface;
+using Semester_Project.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Semester_Project6.Models.Repository
+namespace Semester_Project.Models.Repository
 {
     public class Repository : ISPuserinterface
     {
@@ -63,6 +63,7 @@ namespace Semester_Project6.Models.Repository
             try
             {
                 return dbContext.ISP_Users
+                                .AsNoTracking()
                                 .Include(u => u.InternetPackage)
                                 .ToList();
             }
@@ -77,7 +78,7 @@ namespace Semester_Project6.Models.Repository
 
         public List<ISP_user> Get(string? searchString, string? status = "")
         {
-             var query = dbContext.ISP_Users.Include(u => u.InternetPackage).AsQueryable();
+             var query = dbContext.ISP_Users.AsNoTracking().Include(u => u.InternetPackage).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -106,6 +107,22 @@ namespace Semester_Project6.Models.Repository
             return dbContext.ISP_Users
                             .Include(u => u.InternetPackage)
                             .FirstOrDefault(u => u.Id == id);
+        }
+
+        public ISP_user? GetUserByEmail(string email)
+        {
+            return dbContext.ISP_Users
+                            .AsNoTracking()
+                            .Include(u => u.InternetPackage)
+                            .FirstOrDefault(u => u.Email == email);
+        }
+
+        public ISP_user? GetUserByIdentityId(string identityId)
+        {
+            return dbContext.ISP_Users
+                            .AsNoTracking()
+                            .Include(u => u.InternetPackage)
+                            .FirstOrDefault(u => u.IdentityUserId == identityId);
         }
 
         public bool UpdateCustomer(ISP_user updatedCustomer)

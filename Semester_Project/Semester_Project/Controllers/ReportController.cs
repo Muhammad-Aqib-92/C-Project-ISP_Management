@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Semester_Project6.Models.Interface;
+using Semester_Project.Models.Interface;
 using System.Collections.Generic;
 
-namespace Semester_Project6.Controllers
+namespace Semester_Project.Controllers
 {
     [Authorize]
     [Authorize(Roles = "Admin")]

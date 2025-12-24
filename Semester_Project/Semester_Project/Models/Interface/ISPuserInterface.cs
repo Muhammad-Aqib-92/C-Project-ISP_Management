@@ -1,7 +1,7 @@
 ﻿using Semester_Project.Models;
 using System.Collections.Generic;
 
-namespace Semester_Project6.Models.Interface
+namespace Semester_Project.Models.Interface
 {
     public interface ISPuserinterface
     {
@@ -9,6 +9,8 @@ namespace Semester_Project6.Models.Interface
         List<ISP_user> Get();
         List<ISP_user> Get(string? searchString, string? status = ""); // NEW SEARCH METHOD
         ISP_user? GetUserById(int id);
+        ISP_user? GetUserByEmail(string email);
+        ISP_user? GetUserByIdentityId(string identityId);
         bool UpdateCustomer(ISP_user updatedCustomer);
         bool UpdateUser(ISP_user updatedUser);
         bool DeleteUser(int id);

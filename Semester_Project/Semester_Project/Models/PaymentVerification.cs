@@ -28,5 +28,7 @@ namespace Semester_Project.Models
         public DateTime? ProcessedAt { get; set; }
         
         public string? AdminRemarks { get; set; }
+        
+        public string? ReceiptPath { get; set; }
     }
 }

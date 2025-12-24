@@ -56,7 +56,7 @@
                     After making the payment via bank transfer, fill in the form below to notify our team for verification.
                 </div>
 
-                <form asp-action="MakePayment" method="post">
+                <form asp-action="MakePayment" method="post" enctype="multipart/form-data">
                     <input type="hidden" asp-for="ISP_userId" />
                     <input type="hidden" asp-for="Amount" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -73,8 +73,15 @@
                             <label asp-for="TransactionReference" class="font-weight-bold text-gray-700"></label>
                             <input asp-for="TransactionReference" class="form-control" placeholder="e.g. TXN12345 or Receipt Number" />
                             <span asp-validation-for="TransactionReference" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="font-weight-bold text-gray-700">Upload Payment Receipt (Optional)</label>
+                            <input type="file" name="receiptFile" class="form-control" accept="image/*,.pdf" />
                             <small class="form-text text-muted">
-                                <i class="fas fa-info-circle"></i> Optional: Enter your transaction ID or reference number
+                                <i class="fas fa-info-circle"></i> Upload a screenshot or PDF of your payment confirmation.
                             </small>
                         </div>
                     </div>

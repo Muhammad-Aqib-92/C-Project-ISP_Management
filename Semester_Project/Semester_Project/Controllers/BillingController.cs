@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Semester_Project.Models;
-using Semester_Project6.Models.Interface;
+using Semester_Project.Models.Interface;
 using System.Collections.Generic;
 
-namespace Semester_Project6.Controllers
+namespace Semester_Project.Controllers
 {
     [Authorize]
     [Authorize(Roles = "Admin")]
@@ -127,36 +128,46 @@ namespace Semester_Project6.Controllers
         {
             try
             {
-                var paidUsers = repo.Get().Where(u => u.IsPaid == true).ToList();
-                int fixedCount = 0;
-                int updatedCount = 0;
+                // Only load essential fields for check
+                var paidUsers = _context.ISP_Users
+                    .AsNoTracking()
+                    .Where(u => u.IsPaid == true)
+                    .Select(u => new { u.Id, u.Price, PackagePrice = u.InternetPackage != null ? u.InternetPackage.Price : 0 })
+                    .ToList();
+
+                bool changesMade = false;
 
                 foreach (var user in paidUsers)
                 {
-                    var history = _context.PaymentHistories.FirstOrDefault(p => p.UserId == user.Id);
+                    var hasHistory = _context.PaymentHistories.Any(p => p.UserId == user.Id);
                     
-                    if (history == null)
+                    if (!hasHistory)
                     {
                         var payment = new PaymentHistory
                         {
                             UserId = user.Id,
-                            Amount = user.Price > 0 ? user.Price : (user.InternetPackage?.Price ?? 0),
+                            Amount = user.Price > 0 ? user.Price : user.PackagePrice,
                             PaymentDate = System.DateTime.Now,
                             InvoiceNumber = $"INV-{System.DateTime.Now:yyyyMMdd}-{user.Id}-FIX"
                         };
                         _context.PaymentHistories.Add(payment);
-                        fixedCount++;
+                        changesMade = true;
                     }
-                    else if (history.Amount == 0 && user.Price > 0)
+                    else if (user.Price > 0)
                     {
-                        history.Amount = user.Price;
-                        history.PaymentDate = System.DateTime.Now; 
-                        _context.PaymentHistories.Update(history);
-                        updatedCount++;
+                         // Check for $0 history to fix
+                         var zeroHistory = _context.PaymentHistories.FirstOrDefault(p => p.UserId == user.Id && p.Amount == 0);
+                         if(zeroHistory != null)
+                         {
+                             zeroHistory.Amount = user.Price;
+                             zeroHistory.PaymentDate = System.DateTime.Now;
+                             _context.PaymentHistories.Update(zeroHistory);
+                             changesMade = true;
+                         }
                     }
                 }
 
-                if (fixedCount > 0 || updatedCount > 0)
+                if (changesMade)
                 {
                     _context.SaveChanges();
                 }

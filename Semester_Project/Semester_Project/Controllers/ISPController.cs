@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Semester_Project.Models;
-using Semester_Project6.Models.Interface;
+using Semester_Project.Models.Interface;
 using System.Collections.Generic;
 using System;
 
-namespace Semester_Project6.Controllers
+namespace Semester_Project.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ISPController : Controller
@@ -315,35 +315,41 @@ namespace Semester_Project6.Controllers
 
         private async System.Threading.Tasks.Task EnsureRolesConsistent()
         {
-             var allProfiles = repo.Get();
-            foreach (var profile in allProfiles)
+            // Only fetch profiles that might need linking or role assignment
+            var profilesToSync = _context.ISP_Users
+                .Where(u => string.IsNullOrEmpty(u.IdentityUserId) || u.IdentityUserId != null) 
+                .ToList();
+
+            foreach (var profile in profilesToSync)
             {
+                myappuser? user = null;
                 if (!string.IsNullOrEmpty(profile.IdentityUserId))
                 {
-                    var user = await _userManager.FindByIdAsync(profile.IdentityUserId);
-                    if (user != null)
-                    {
-                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
-                        {
-                            await _userManager.AddToRoleAsync(user, "User");
-                        }
-                    }
+                    user = await _userManager.FindByIdAsync(profile.IdentityUserId);
                 }
                 else if (!string.IsNullOrEmpty(profile.Email))
                 {
-                     var user = await _userManager.FindByEmailAsync(profile.Email);
-                     if (user != null)
+                    user = await _userManager.FindByEmailAsync(profile.Email);
+                    if (user != null)
                     {
-                        // Link if missing
                         profile.IdentityUserId = user.Id;
-                        repo.UpdateUser(profile);
-
-                        if (!await _userManager.IsInRoleAsync(user, "User") && !await _userManager.IsInRoleAsync(user, "Admin"))
-                        {
-                            await _userManager.AddToRoleAsync(user, "User");
-                        }
+                        _context.ISP_Users.Update(profile);
                     }
                 }
+
+                if (user != null)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (!roles.Contains("User") && !roles.Contains("Admin"))
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
+                }
+            }
+            
+            if (_context.ChangeTracker.HasChanges())
+            {
+                await _context.SaveChangesAsync();
             }
         }
 

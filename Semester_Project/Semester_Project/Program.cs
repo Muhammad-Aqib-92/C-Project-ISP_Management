@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Semester_Project.Data;
 using Semester_Project.Models;
-using Semester_Project6.Models.Interface;
-using Semester_Project6.Models.Repository;
+using Semester_Project.Models.Interface;
+using Semester_Project.Models.Repository;
+using Semester_Project.Services;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +62,47 @@ using (var scope = app.Services.CreateScope())
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
+
+// Ensure Database Schema is up to date (Manual Migration for ReceiptPath)
+using (var scope = app.Services.CreateScope())
+{
+    var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+    var dbConnString = config.GetConnectionString("DefaultConnection");
+    
+    try 
+    {
+        // Check for both "Data Source" and "DataSource"
+        if (dbConnString != null && (dbConnString.Contains("Data Source") || dbConnString.Contains("DataSource")))
+        {
+            using (var connection = new SqliteConnection(dbConnString))
+            {
+                connection.Open();
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = "SELECT COUNT(*) FROM pragma_table_info('PaymentVerifications') WHERE name='ReceiptPath';";
+                var exists = Convert.ToInt32(cmd.ExecuteScalar());
+                
+                if (exists == 0)
+                {
+                    cmd.CommandText = "ALTER TABLE PaymentVerifications ADD COLUMN ReceiptPath TEXT;";
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("--> [SUCCESS] Added missing 'ReceiptPath' column to PaymentVerifications table.");
+                }
+                else 
+                {
+                    Console.WriteLine("--> [INFO] 'ReceiptPath' column already exists.");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("--> [WARNING] SQLITE connection string not recognized for manual migration.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"--> [ERROR] Database Migration failed: {ex.Message}");
     }
 }
 

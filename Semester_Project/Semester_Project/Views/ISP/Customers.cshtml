@@ -42,7 +42,7 @@
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Package</th>
-                        @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("SupportAgent"))
                         {
                             <th>Price</th>
                         }
@@ -62,7 +62,7 @@
                             <td class="text-center">
                                 @(customer.InternetPackage?.Speed.ToString() ?? "0") Mbps
                             </td>
-                            @if (User.IsInRole("SuperAdmin") || User.IsInRole("SupportAgent"))
+                            @if (User.IsInRole("Admin") || User.IsInRole("SupportAgent"))
                             {
                                 <td>
                                     @(customer.Price.ToString("C"))

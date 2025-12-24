@@ -18,20 +18,23 @@ namespace Semester_Project.Services
 
         public DashboardViewModel GetDashboardViewModel()
         {
-            var totalCustomers = _context.ISP_Users.Count();
+            var totalCustomers = _context.ISP_Users.AsNoTracking().Count();
 
             var totalRevenue = _context.ISP_Users
+                .AsNoTracking()
                 .Where(u => u.IsPaid == true && u.InternetPackage != null)
                 .Sum(u => u.Price);
 
-            var unpaidCustomers = _context.ISP_Users.Count(u => u.IsPaid == false);
+            var unpaidCustomers = _context.ISP_Users.AsNoTracking().Count(u => u.IsPaid == false);
             var pendingAmount = _context.ISP_Users
+                .AsNoTracking()
                 .Where(u => u.IsPaid == false)
                 .Sum(u => u.Price);
 
-            var paidCustomers = _context.ISP_Users.Count(u => u.IsPaid == true);
+            var paidCustomers = _context.ISP_Users.AsNoTracking().Count(u => u.IsPaid == true);
 
             var cost = _context.ISP_Users
+                .AsNoTracking()
                 .Where(u => u.IsPaid == true && u.InternetPackage != null)
                 .Sum(u => u.InternetPackage.Cost);
 
@@ -40,12 +43,14 @@ namespace Semester_Project.Services
             // Fetch 5 most recent customers
             var recentCustomers = _context.ISP_Users
                 .Include(u => u.InternetPackage)
+                .AsNoTracking()
                 .OrderByDescending(u => u.Id)
                 .Take(5)
                 .ToList();
 
             // Calculate package distribution
             var packageStats = _context.ISP_Users
+                .AsNoTracking()
                 .Where(u => u.InternetPackage != null)
                 .GroupBy(u => u.InternetPackage.PackageName)
                 .Select(g => new { Name = g.Key, Count = g.Count() })
@@ -60,6 +65,7 @@ namespace Semester_Project.Services
 
             // Fetch payments for the last 6 months
             var recentPayments = _context.PaymentHistories
+                .AsNoTracking()
                 .Where(p => p.PaymentDate >= startDate)
                 .ToList();
 
@@ -87,7 +93,7 @@ namespace Semester_Project.Services
                 PackageDistribution = packageStats,
                 RevenueMonths = revenueMonths,
                 RevenueAmounts = revenueAmounts,
-                OpenTickets = _context.SupportTickets.Count(t => t.Status == TicketStatus.Open)
+                OpenTickets = _context.SupportTickets.AsNoTracking().Count(t => t.Status == TicketStatus.Open)
             };
         }
     }

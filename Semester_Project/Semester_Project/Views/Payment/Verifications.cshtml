@@ -23,6 +23,7 @@
                                     <th>Customer</th>
                                     <th>Amount</th>
                                     <th>Transaction Ref</th>
+                                    <th>Receipt</th>
                                     <th>Submitted</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -48,6 +49,18 @@
                                             }
                                         </td>
                                         <td>
+                                            @if (!string.IsNullOrEmpty(item.ReceiptPath))
+                                            {
+                                                <a href="@item.ReceiptPath" target="_blank" class="btn btn-sm btn-outline-info">
+                                                    <i class="fas fa-file-invoice"></i> View
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted small">No receipt</span>
+                                            }
+                                        </td>
+                                        <td>
                                             <div>@item.CreatedAt.ToString("MMM dd, yyyy")</div>
                                             <div class="small text-muted">@item.CreatedAt.ToString("hh:mm tt")</div>
                                         </td>
@@ -68,13 +81,13 @@
                                         <td>
                                             @if (item.Status == "Pending")
                                             {
-                                                <form asp-action="Approve" asp-route-id="@item.Id" method="post" style="display: inline;">
-                                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this payment?')">
+                                                <form id="approve-form-@item.Id" asp-action="Approve" asp-route-id="@item.Id" method="post" style="display: inline;">
+                                                    <button type="button" class="btn btn-sm btn-success btn-approve" data-id="@item.Id">
                                                         <i class="fas fa-check"></i> Approve
                                                     </button>
                                                 </form>
-                                                <form asp-action="Reject" asp-route-id="@item.Id" method="post" style="display: inline;">
-                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Reject this payment?')">
+                                                <form id="reject-form-@item.Id" asp-action="Reject" asp-route-id="@item.Id" method="post" style="display: inline;">
+                                                    <button type="button" class="btn btn-sm btn-danger btn-reject" data-id="@item.Id">
                                                         <i class="fas fa-times"></i> Reject
                                                     </button>
                                                 </form>
@@ -103,3 +116,51 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.btn-approve').click(function () {
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Approve Payment?',
+                    text: "This will activate the user's service and send a confirmation notification.",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#10b981',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Yes, Approve',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'animated fadeInDown faster'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(`#approve-form-${id}`).submit();
+                    }
+                });
+            });
+
+            $('.btn-reject').click(function () {
+                const id = $(this).data('id');
+                Swal.fire({
+                    title: 'Reject Payment?',
+                    text: "The user will be notified that their payment could not be verified.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Yes, Reject',
+                    background: '#ffffff',
+                    customClass: {
+                        popup: 'animated fadeInDown faster'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(`#reject-form-${id}`).submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

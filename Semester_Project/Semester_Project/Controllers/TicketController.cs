@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semester_Project.Data;
 using Semester_Project.Models;
-using Semester_Project6.Models.Interface;
+using Semester_Project.Models.Interface;
 using System.Linq;
 
 namespace Semester_Project.Controllers
@@ -27,22 +27,17 @@ namespace Semester_Project.Controllers
         public async System.Threading.Tasks.Task<IActionResult> Index()
         {
              var user = await _userManager.GetUserAsync(User);
-             var tickets = _context.SupportTickets.Include(t => t.User).AsQueryable();
+             var tickets = _context.SupportTickets.Include(t => t.User).AsNoTracking().AsQueryable();
 
-             if (!User.IsInRole("Admin"))
-             {
-                 // Filter for current user's email if not Admin
-                  // Assuming SupportTicket links to ISP_user via UserId (int) but we have Identity User here. 
-                  // We need to find the ISP_user ID based on Identity User Email.
-                  // Filter for current user's profile
-                  var allProfiles = _repo.Get();
-                  // Try finding by Identity ID first
-                  var userProfile = allProfiles.FirstOrDefault(u => u.IdentityUserId == user.Id);
+              if (!User.IsInRole("Admin"))
+              {
+                  // Optimized lookup
+                  var userProfile = _repo.GetUserByIdentityId(user.Id);
                   
                   // Fallback to Email if legacy or not linked
                   if (userProfile == null)
                   {
-                      userProfile = allProfiles.FirstOrDefault(u => u.Email == user.Email);
+                      userProfile = _repo.GetUserByEmail(user.Email);
                   }
 
                   if (userProfile != null)
@@ -77,15 +72,12 @@ namespace Semester_Project.Controllers
             
              if (!User.IsInRole("Admin"))
             {
-                // Force assign current user
-                // CAUTION: Ensure we find the profile!
-                // Force assign current user
-                var allProfiles = _repo.Get();
-                var userProfile = allProfiles.FirstOrDefault(u => u.IdentityUserId == currentUser.Id);
+                // Optimized lookup
+                var userProfile = _repo.GetUserByIdentityId(currentUser.Id);
                 
                 if (userProfile == null)
                 {
-                    userProfile = allProfiles.FirstOrDefault(u => u.Email == currentUser.Email);
+                    userProfile = _repo.GetUserByEmail(currentUser.Email);
                 }
 
                 if (userProfile != null)

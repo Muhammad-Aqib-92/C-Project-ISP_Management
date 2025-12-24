@@ -60,6 +60,7 @@ namespace Semester_Project.Controllers
 
         // POST: Payment/Approve/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Approve(int id)
         {
             var request = await _context.PaymentVerifications.FindAsync(id);
@@ -76,7 +77,10 @@ namespace Semester_Project.Controllers
             request.ProcessedAt = DateTime.Now;
 
             // 2. Mark User Paid
-            var user = await _context.ISP_Users.FindAsync(request.ISP_userId);
+            var user = await _context.ISP_Users
+                .Include(u => u.InternetPackage)
+                .FirstOrDefaultAsync(u => u.Id == request.ISP_userId);
+
             if (user != null)
             {
                 user.IsPaid = true;
@@ -93,18 +97,21 @@ namespace Semester_Project.Controllers
                     InvoiceNumber = invoiceNumber
                 });
 
-                // Add Notification
-                var packageName = user.InternetPackage?.PackageName ?? "Your plan";
-                var expiryDate = user.PackageExpiryDate?.ToString("MMMM dd, yyyy") ?? "renewal date";
-                
-                _context.Notifications.Add(new Notification
+                // Add Notification only if IdentityUserId is present
+                if (!string.IsNullOrEmpty(user.IdentityUserId))
                 {
-                    UserId = user.IdentityUserId,
-                    Title = "✅ Payment Verified",
-                    Message = $"Your payment of {request.Amount:C} has been confirmed! Your {packageName} service is now active until {expiryDate}. Thank you!",
-                    Type = "Success",
-                    Link = "/User/MyProfile"
-                });
+                    var packageName = user.InternetPackage?.PackageName ?? "Your plan";
+                    var expiryDate = user.PackageExpiryDate?.ToString("MMMM dd, yyyy") ?? "renewal date";
+                    
+                    _context.Notifications.Add(new Notification
+                    {
+                        UserId = user.IdentityUserId,
+                        Title = "✅ Payment Verified",
+                        Message = $"Your payment of {request.Amount:C} has been confirmed! Your {packageName} service is now active until {expiryDate}. Thank you!",
+                        Type = "Success",
+                        Link = "/User/MyProfile"
+                    });
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -114,6 +121,7 @@ namespace Semester_Project.Controllers
 
         // POST: Payment/Reject/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Reject(int id)
         {
             var request = await _context.PaymentVerifications.FindAsync(id);
