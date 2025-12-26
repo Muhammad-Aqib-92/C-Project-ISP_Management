@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row animate__animated animate__fadeIn">
+<div class="row">
     <div class="col-12">
         <div class="card card-custom shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -118,7 +118,7 @@
 </div>
 
 <!-- Receipt Preview Modal -->
-<div class="modal fade animate__animated animate__fadeIn" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true" data-bs-keyboard="true">
+<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true" data-bs-keyboard="true" data-bs-backdrop="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content border-0" style="border-radius: 1.5rem; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
             <div class="modal-header bg-light border-0 px-4 pt-4">
@@ -149,6 +149,9 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            // Move modal to body to avoid z-index/stacking context issues
+            $('#receiptModal').appendTo("body");
+
             $('.btn-approve').click(function () {
                 const id = $(this).data('id');
                 Swal.fire({
